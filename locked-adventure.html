@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flag Rush - Spartanz 2.O</title>
+    <link rel="icon" type="image/x-icon" href="assets/spartanz2k25logo.png" />
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Arial", sans-serif;
+            background: linear-gradient(135deg, #1a0000, #4b0000);
+            color: #f0e6d2;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Iron Man Theme Elements */
+        .cyber-accent {
+            color: #FFD700 !important;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        }
+
+        .cyber-glow {
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+        }
+
+        /* Header Styling */
+        .header {
+            background: rgba(30, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            border-bottom: 2px solid #FFD700;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .spartanz-logo {
+            width: 60px;
+            height: 60px;
+            background: url('https://placehold.co/60x60/FF0000/000000?text=IM') center/contain no-repeat;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+        }
+
+        .event-title {
+            font-size: 2.2rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #FFD700, #FF4500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .section {
+            background: rgba(40, 0, 0, 0.75);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #FFD700, transparent);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.5), transparent);
+        }
+
+        /* Rules List */
+        .rules-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .rules-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .rules-list li:last-child {
+            border-bottom: none;
+        }
+
+        .rule-icon {
+            min-width: 30px;
+            height: 30px;
+            background: rgba(255, 0, 0, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #FFD700;
+            flex-shrink: 0;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+        }
+
+        .rule-content h4 {
+            margin-bottom: 0.5rem;
+            color: #FFD700;
+        }
+
+        /* Event Logo Visual */
+        .logo-visual {
+            position: relative;
+            height: 300px;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-container-main {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .event-logo {
+            width: 150px;
+            height: 150px;
+            background: url('assets/FlagRush.png') center/contain no-repeat;
+            border-radius: 20px;
+            box-shadow: 0 0 30px #FF0000, 0 0 60px rgba(255, 0, 0, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 30px #FF0000, 0 0 60px rgba(255, 0, 0, 0.5); }
+            50% { box-shadow: 0 0 40px #FFD700, 0 0 80px rgba(255, 215, 0, 0.6); }
+            100% { box-shadow: 0 0 30px #FF0000, 0 0 60px rgba(255, 0, 0, 0.5); }
+        }
+
+        /* Register Button */
+        .register-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF0000, #8B0000);
+            color: #FFD700;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin: 2rem 0;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #FFD700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .register-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .register-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.6);
+            background: linear-gradient(135deg, #FF4500, #B22222);
+        }
+
+        .register-button:hover::before {
+            left: 100%;
+        }
+
+        .register-button:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+        }
+
+        /* Back to Events Button */
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700, #FF4500);
+            color: #000;
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            border: 2px solid #FFD700;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+            background: linear-gradient(135deg, #FFB300, #FF0000);
+        }
+
+        /* Button Container */
+        .button-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .event-title {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.7rem;
+            }
+            
+            .logo-visual {
+                height: 200px;
+            }
+            
+            .logo-container-main {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .event-logo {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .spartanz-logo {
+                width: 50px;
+                height: 50px;
+                background: url('https://placehold.co/50x50/FF0000/000000?text=IM') center/contain no-repeat;
+            }
+            
+            .register-button {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .event-title {
+                font-size: 1.5rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .rule-icon {
+                min-width: 25px;
+                height: 25px;
+                font-size: 0.9rem;
+            }
+            
+            .logo-visual {
+                height: 180px;
+            }
+            
+            .logo-container-main {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .event-logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .spartanz-logo {
+                width: 40px;
+                height: 40px;
+                background: url('https://placehold.co/40x40/FF0000/000000?text=IM') center/contain no-repeat;
+            }
+            
+            .register-button {
+                padding: 0.9rem 1.8rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.3);
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-container">
+            <div class="spartanz-logo"></div>
+            <h1 class="event-title">Locked Adventure</h1>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="logo-visual">
+            <div class="logo-container-main">
+                <div class="event-logo"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Event Description</h2>
+            <p>A high-paced cybersecurity capture-the-flag challenge where you'll hunt for flags, exploit vulnerabilities, and outsmart your opponents. Test your hacking skills in this intense competition!</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Team Requirements</h2>
+            <ul class="rules-list">
+                <li>
+                    <div class="rule-icon">1</div>
+                    <div class="rule-content">
+                        <h4>Team Size</h4>
+                        <p>1-2 participants per team</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">2</div>
+                    <div class="rule-content">
+                        <h4>Equipment</h4>
+                        <p>Participants must bring their own laptops with necessary tools installed</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">3</div>
+                    <div class="rule-content">
+                        <h4>Challenge Format</h4>
+                        <p>40 challenges of varying difficulty levels</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Scoring System</h2>
+            <ul class="rules-list">
+                <li>
+                    <div class="rule-icon">S</div>
+                    <div class="rule-content">
+                        <h4>Points Allocation</h4>
+                        <p>Points awarded based on challenge difficulty - harder challenges yield more points</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">W</div>
+                    <div class="rule-content">
+                        <h4>Winners</h4>
+                        <p>Top 3 teams with the highest points at the end of the event will be declared winners</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title cyber-accent">Competition Rules</h2>
+            <ul class="rules-list">
+                <li>
+                    <div class="rule-icon">⚠️</div>
+                    <div class="rule-content">
+                        <h4>Strict Prohibition</h4>
+                        <p>Collaboration between teams and external help is strictly prohibited</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">🚫</div>
+                    <div class="rule-content">
+                        <h4>Disqualification</h4>
+                        <p>Any form of misconduct or cheating will result in immediate disqualification</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">🔒</div>
+                    <div class="rule-content">
+                        <h4>Security</h4>
+                        <p>All attacks must be confined to the designated competition environment</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">⏱️</div>
+                    <div class="rule-content">
+                        <h4>Time Limit</h4>
+                        <p>The event will run for a fixed duration - all flags must be captured within this timeframe</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="button-container">
+            <a href="https://forms.gle/wQ4Rn2uurA5TD5C26" class="register-button" target="_blank">
+                Register Now
+            </a>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="#" class="back-button">BACK TO EVENTS</a>
+        </div>
+    </div>
+
+
+    <script>
+        // Add subtle animation to rule icons on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const ruleIcons = document.querySelectorAll('.rule-icon');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.transform = 'scale(1.1)';
+                        entry.target.style.transition = 'transform 0.3s ease';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            ruleIcons.forEach(icon => {
+                observer.observe(icon);
+            });
+        });
+    </script>
+</body>
+</html>

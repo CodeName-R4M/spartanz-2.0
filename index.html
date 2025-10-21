@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Spartanz 2.O</title>
+    <link rel="icon" type="image/x-icon" href="assets/spartanz2k25logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      /* Reset & Base */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background: #000;
+        color: white;
+        overflow-x: hidden;
+        /* 👇 DO NOT set position:relative here — it can break fixed positioning of snow */
+      }
+
+      /* Full viewport height sections */
+      section {
+        min-height: 100vh;
+        width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem 1rem;
+      }
+
+      /* College Header */
+      .college-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        z-index: 100;
+        border-bottom: 1px solid rgba(255, 204, 0, 0.3);
+      }
+
+      .college-logo-placeholder {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .college-logo-placeholder img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+      }
+
+      .college-name {
+        flex: 1;
+        font-size: 1.2rem;
+        line-height: 1.3;
+        font-weight: bold;
+        color: #ffcc00;
+        text-align: left;
+        margin-left: 0.5rem;
+      }
+
+      /* Desktop Navigation Links */
+      .nav-links {
+        display: none;
+        gap: 1.5rem;
+      }
+
+      .nav-links a {
+        color: #ffcc00;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: bold;
+        transition: color 0.2s;
+      }
+
+      .nav-links a:hover {
+        color: white;
+      }
+
+      /* Hamburger Button */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        cursor: pointer;
+        z-index: 101;
+      }
+
+      .hamburger span {
+        height: 3px;
+        width: 100%;
+        background-color: #ffcc00;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      /* Mobile Menu */
+      .mobile-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        max-width: 300px;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 4rem 1.5rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        transition: right 0.4s ease;
+        z-index: 99;
+        border-left: 1px solid rgba(255, 204, 0, 0.3);
+      }
+
+      .mobile-menu.active {
+        right: 0;
+        z-index: 102;
+      }
+
+      .mobile-menu a {
+        color: #ffcc00;
+        text-decoration: none;
+        font-size: 1.3rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(255, 204, 0, 0.2);
+        transition: color 0.2s;
+      }
+
+      .mobile-menu a:hover {
+        color: #fff;
+      }
+
+      /* Close button inside mobile menu */
+      .close-btn {
+        position: absolute;
+        top: 1.2rem;
+        right: 1.2rem;
+        background: none;
+        border: none;
+        color: #ffcc00;
+        font-size: 1.8rem;
+        cursor: pointer;
+        z-index: 100;
+      }
+
+      /* Hamburger animation */
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+
+      @media (max-width: 768px) {
+        .hamburger {
+          display: flex;
+        }
+      }
+
+      @media (min-width: 769px) {
+        .nav-links {
+          display: flex;
+        }
+        .college-name {
+          font-size: 1.5rem;
+        }
+        .college-logo-placeholder {
+          width: 60px;
+          height: 60px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .college-logo-placeholder {
+          width: 40px;
+          height: 40px;
+        }
+        .college-name {
+          font-size: 1rem;
+        }
+      }
+
+      /* Parallax Background Effect */
+      .parallax-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 120%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: 1;
+        background-attachment: fixed;
+      }
+
+      @media (max-width: 767px) {
+        .parallax-bg {
+          background-attachment: scroll;
+          background-size: cover;
+          background-position: center center;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .parallax-bg {
+          background-attachment: fixed;
+          background-size: cover;
+          background-position: center 30%;
+        }
+      }
+
+      .section-content {
+        position: relative;
+        z-index: 10;
+        max-width: 1000px;
+        text-align: center;
+      }
+
+      /* Section 1: Hero with dark overlay */
+      .section-1 .parallax-bg {
+        background-image: url("assets/bg-1.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      /* Section 2: Events with different overlay */
+      .section-2 .parallax-bg {
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.8),
+            rgba(0, 0, 0, 0.8)
+          ),
+          url("assets/bg-2.png");
+        background-blend-mode: overlay;
+      }
+
+      /* Section 3: Non-Technical Events */
+      .section-3 .parallax-bg {
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.85),
+            rgba(0, 0, 0, 0.85)
+          ),
+          url("https://placehold.co/1920x1080/2c3e50/ffcc00?text=Non-Technical+Events");
+        background-blend-mode: overlay;
+      }
+
+      .section-1 .parallax-bg,
+      .section-2 .parallax-bg,
+      .section-3 .parallax-bg {
+        will-change: transform;
+        transition: transform 0.1s ease-out;
+      }
+
+      /* Hero Section - Spartanz 2.0 */
+      .hero-title {
+        font-size: 2.5rem;
+        margin-top: 20vh;
+        margin-bottom: 2rem;
+        color: #ffcc00;
+        text-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+      }
+
+      .hero-logo {
+        max-width: 200px;
+        height: auto;
+        margin: 0 auto 2rem;
+        background: transparent;
+        border: none;
+        filter: drop-shadow(0 0 15px rgba(255, 204, 0, 0.8))
+          drop-shadow(0 0 30px rgba(255, 204, 0, 0.6))
+          drop-shadow(0 0 45px rgba(255, 204, 0, 0.4));
+        mix-blend-mode: normal;
+      }
+
+      /* Countdown Timer */
+      .countdown-container {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 2rem;
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 204, 0, 0.3);
+        margin-top: 2rem;
+      }
+
+      .countdown-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: #ffcc00;
+      }
+
+      .countdown {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        padding: 0 1rem;
+      }
+
+      .countdown-item {
+        text-align: center;
+        flex: 1 1 auto;
+        min-width: 70px;
+      }
+
+      .countdown-value {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #ffcc00;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        min-width: 80px;
+      }
+
+      .countdown-label {
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* Events Section */
+      .events-title {
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        color: #ffcc00;
+        text-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+      }
+
+      .events-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .event-card {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 2rem;
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 204, 0, 0.3);
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: visible;
+      }
+
+      .event-card::before,
+      .event-card::after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: #ffcc00;
+        border-radius: 50%;
+        box-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00, 0 0 30px #ffcc00,
+          0 0 40px rgba(255, 204, 0, 0.6);
+        animation: sparkTravel 4s linear infinite;
+        z-index: 2;
+      }
+
+      .event-card::after {
+        animation-delay: 2s;
+      }
+
+      @keyframes sparkTravel {
+        0% {
+          top: 0;
+          left: 0;
+          transform: translate(0, 0);
+        }
+        25% {
+          top: 0;
+          left: 100%;
+          transform: translate(-50%, 0);
+        }
+        50% {
+          top: 100%;
+          left: 100%;
+          transform: translate(-50%, -50%);
+        }
+        75% {
+          top: 100%;
+          left: 0;
+          transform: translate(0, -50%);
+        }
+        100% {
+          top: 0;
+          left: 0;
+          transform: translate(0, 0);
+        }
+      }
+
+      .event-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(255, 204, 0, 0.3);
+      }
+
+      .event-title {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: #ffcc00;
+      }
+
+      .event-description {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #e0e0e0;
+      }
+
+      /* Responsive Design */
+      @media (min-width: 768px) {
+        .hero-title {
+          font-size: 3.5rem;
+        }
+        .hero-logo {
+          max-width: 250px;
+        }
+        .countdown-value {
+          font-size: 3rem;
+          min-width: 100px;
+        }
+        .events-title {
+          font-size: 3.5rem;
+        }
+        .event-title {
+          font-size: 2rem;
+        }
+        .events-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .hero-title {
+          font-size: 4rem;
+        }
+        .hero-logo {
+          max-width: 300px;
+        }
+        .countdown-value {
+          font-size: 3.5rem;
+          min-width: 120px;
+        }
+        .events-title {
+          font-size: 4rem;
+        }
+        .event-title {
+          font-size: 2.2rem;
+        }
+        .events-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      /* Scroll indicator for mobile */
+      .scroll-hint {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 14px;
+        text-align: center;
+        z-index: 20;
+      }
+
+      .scroll-hint span {
+        display: block;
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+
+      /* Loading Screen */
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      .loading-video.show {
+        opacity: 1;
+      }
+      .loading-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 1s ease;
+        background: #000;
+      }
+
+      .progress-container {
+        width: 70%;
+        max-width: 500px;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 15px;
+        z-index: 10;
+      }
+
+      .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: #ffcc00;
+        transition: width 0.3s ease;
+      }
+
+      #loadingText {
+        font-size: 18px;
+        z-index: 10;
+        text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+      }
+
+      .loaded .loading-screen {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.5s ease;
+      }
+
+      .main-content {
+        opacity: 0;
+        transition: opacity 1s ease;
+      }
+
+      .loaded .main-content {
+        opacity: 1;
+      }
+
+      /* Footer Styles */
+      .footer {
+        background: rgba(0, 0, 0, 0.9);
+        padding: 2rem 1rem;
+        text-align: center;
+        border-top: 1px solid rgba(255, 204, 0, 0.3);
+      }
+
+      .footer-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .footer-text {
+        color: #e0e0e0;
+        font-size: 1.1rem;
+        line-height: 1.5;
+      }
+
+      .cypherix-logo-placeholder {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 10px;
+        text-align: center;
+        filter: drop-shadow(0 0 10px rgba(52, 152, 219, 0.8))
+          drop-shadow(0 0 20px rgba(52, 152, 219, 0.6))
+          drop-shadow(0 0 30px rgba(52, 152, 219, 0.4));
+      }
+
+      @media (min-width: 768px) {
+        .footer-content {
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .footer-text {
+          text-align: left;
+        }
+
+        .cypherix-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hero-title {
+          font-size: 2rem;
+        }
+        .hero-logo {
+          max-width: 150px;
+        }
+        .countdown {
+          gap: 0.3rem;
+          padding: 0 0.5rem;
+        }
+
+        .countdown-value {
+          font-size: 1.8rem;
+          min-width: 50px;
+          padding: 0.25rem 0.5rem;
+        }
+
+        .countdown-label {
+          font-size: 0.65rem;
+        }
+        .countdown-value {
+          font-size: 2rem;
+          min-width: 60px;
+          padding: 0.3rem 0.6rem;
+        }
+        .countdown-label {
+          font-size: 0.7rem;
+        }
+        .events-title {
+          font-size: 2rem;
+        }
+        .event-title {
+          font-size: 1.5rem;
+        }
+        .event-description {
+          font-size: 0.9rem;
+        }
+        .event-card {
+          padding: 1.5rem;
+        }
+      }
+
+      /* --- Snowflake Background --- */
+      #snow-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh; /* Full viewport height */
+        overflow: hidden;
+        pointer-events: none;
+        z-index: -1; /* 👈 Behind EVERYTHING */
+        /* 👇 Critical: Ensure it renders full screen without clipping */
+      }
+
+      .snowflake {
+        position: absolute;
+        top: -10px;
+        color: #cfe9ff;
+        font-size: 1em;
+        opacity: 0.8;
+        user-select: none;
+        text-shadow: 0 0 8px #a8e0ff, 0 0 16px #66d9ff, 0 0 32px #99e0ff;
+        animation: fall linear infinite, drift ease-in-out infinite, glow 3s ease-in-out infinite;
+        /* 👇 Ensures they render even if parent has overflow:hidden */
+        transform: translateZ(0);
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(110vh);
+          opacity: 0.9;
+        }
+      }
+
+      @keyframes drift {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(30px); }
+      }
+
+      @keyframes glow {
+        0%, 100% {
+          opacity: 0.9;
+          text-shadow: 0 0 8px #a8e0ff, 0 0 16px #99e0ff;
+        }
+        50% {
+          opacity: 1;
+          text-shadow: 0 0 16px #e0f7ff, 0 0 32px #99e0ff;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Snowflakes behind everything -->
+    <div id="snow-container"></div>
+
+    <!-- College Header -->
+    <div class="college-header">
+      <div class="college-logo-placeholder">
+        <img src="assets/np-logo.png" alt="NPSB College Logo" />
+      </div>
+      <div class="college-name">
+        New Prince Shri Bhavani<br />College of Engineering and Technology
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="nav-links">
+        <a href="/teams.html">Teams</a>
+        <a href="/about.html">About Us</a>
+        <a href="/contact.html">Contact Us</a>
+      </div>
+
+      <!-- Hamburger for mobile -->
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <button class="close-btn" id="closeMenu">&times;</button>
+      <a href="/teams.html">Teams</a>
+      <a href="/about.html">About Us</a>
+      <a href="/contact.html">Contact Us</a>
+    </div>
+
+    <!-- Loading Screen -->
+    <section class="loading-screen" id="loadingScreen">
+      <video id="desktopVideo" autoplay muted playsinline class="loading-video">
+        <source src="assets/loading-pc.mp4" type="video/mp4" />
+      </video>
+      <video id="mobileVideo" autoplay muted playsinline class="loading-video">
+        <source src="assets/loading-mobile.mp4" type="video/mp4" />
+      </video>
+
+      <div class="progress-container" id="progressContainer">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <p id="loadingText">Loading 0%</p>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+      <!-- Section 1: Hero -->
+      <section class="section-1">
+        <div class="parallax-bg" id="parallax1"></div>
+        <div class="section-content">
+          <h1 class="hero-title">Spartanz 2.O</h1>
+          <img
+            src="assets/spartanz2k25logo.png"
+            alt="Spartanz 2K25 Logo"
+            class="hero-logo"
+          />
+          <div class="countdown-container">
+            <h2 class="countdown-title">Countdown to Spartanz 2.O</h2>
+            <div class="countdown" id="countdown">
+              <div class="countdown-item">
+                <div class="countdown-value" id="days">00</div>
+                <div class="countdown-label">Days</div>
+              </div>
+              <div class="countdown-item">
+                <div class="countdown-value" id="hours">00</div>
+                <div class="countdown-label">Hours</div>
+              </div>
+              <div class="countdown-item">
+                <div class="countdown-value" id="minutes">00</div>
+                <div class="countdown-label">Minutes</div>
+              </div>
+              <div class="countdown-item">
+                <div class="countdown-value" id="seconds">00</div>
+                <div class="countdown-label">Seconds</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-hint">
+          <span>Scroll Down</span>
+          <span>↓</span>
+        </div>
+      </section>
+
+      <!-- Section 2: Technical Events -->
+      <section class="section-2">
+        <div class="parallax-bg" id="parallax2"></div>
+        <div class="section-content">
+          <h2 class="events-title">Technical Events</h2>
+          <div class="events-grid">
+            <div class="event-card" onclick="window.open('/innov-spot.html')">
+              <h3 class="event-title">Innovation Spotlight</h3>
+              <p class="event-description">Present your most creative and forward-thinking technical ideas.</p>
+            </div>
+            <div class="event-card" onclick="window.open('/spy-heist.html')">
+              <h3 class="event-title">Spy Heist</h3>
+              <p class="event-description">Step into the shoes of a secret agent...</p>
+            </div>
+            <div class="event-card" onclick="window.open('/flag-rush.html')">
+              <h3 class="event-title">Flag Rush 2.O</h3>
+              <p class="event-description">A high-paced cybersecurity capture-the-flag challenge...</p>
+            </div>
+            <div class="event-card" onclick="window.open('/quizto-bash.html')">
+              <h3 class="event-title">Quizto-bash</h3>
+              <p class="event-description">A fast-paced technical quiz...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Non-Technical Events -->
+      <section class="section-3">
+        <div class="parallax-bg" id="parallax3"></div>
+        <div class="section-content">
+          <h2 class="events-title">Non-Technical Events</h2>
+          <div class="events-grid">
+            <div class="event-card" onclick="window.open('/treasure-hunt.html')">
+              <h3 class="event-title">Treasure Hunt</h3>
+              <p class="event-description">Follow clues, crack riddles...</p>
+            </div>
+            <div class="event-card" onclick="window.open('/loocked-adventure.html')">
+              <h3 class="event-title">Locked Adventure</h3>
+              <p class="event-description">Enter an escape-room style challenge...</p>
+            </div>
+            <div class="event-card" onclick="window.open('/bid-beat.html')">
+              <h3 class="event-title">Bid and Beat</h3>
+              <p class="event-description">Experience the thrill of an auction-themed game...</p>
+            </div>
+            <div class="event-card" onclick="window.open('/freefire.html')">
+              <h3 class="event-title">Free Fire</h3>
+              <p class="event-description">Compete in intense Free Fire matches...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // Snowflakes
+      const snowContainer = document.getElementById("snow-container");
+      const numFlakes = 80;
+      for (let i = 0; i < numFlakes; i++) {
+        const flake = document.createElement("div");
+        flake.classList.add("snowflake");
+        flake.innerHTML = "❄";
+        flake.style.left = Math.random() * 100 + "vw";
+        const size = Math.random() * 1.5 + 0.5;
+        const fallDuration = Math.random() * 10 + 10;
+        const driftDuration = Math.random() * 4 + 4;
+        const delay = Math.random() * 10;
+        flake.style.fontSize = `${size}em`;
+        flake.style.animationDuration = `${fallDuration}s, ${driftDuration}s`;
+        flake.style.animationDelay = `${delay}s, ${delay / 2}s`;
+        snowContainer.appendChild(flake);
+      }
+
+      // Main JS (loading, countdown, parallax, menu)
+      document.addEventListener("DOMContentLoaded", () => {
+        const loadingScreen = document.getElementById("loadingScreen");
+        const desktopVideo = document.getElementById("desktopVideo");
+        const mobileVideo = document.getElementById("mobileVideo");
+        const progressContainer = document.getElementById("progressContainer");
+        const progressBar = document.getElementById("progressBar");
+        const loadingText = document.getElementById("loadingText");
+        const body = document.body;
+
+        const isMobile = window.innerWidth <= 768;
+        const activeVideo = isMobile ? mobileVideo : desktopVideo;
+        activeVideo.style.display = "block";
+        activeVideo.classList.add("show");
+
+        loadingText.textContent = "Please wait...";
+        progressContainer.style.display = "none";
+
+        setTimeout(() => {
+          progressContainer.style.display = "block";
+          loadingText.textContent = "Loading 0%";
+          activeVideo.currentTime = 0;
+          activeVideo.play();
+
+          let progress = 0;
+          const videoDuration = activeVideo.duration || 10;
+          const intervalTime = (videoDuration * 1000) / 100;
+
+          const progressInterval = setInterval(() => {
+            progress++;
+            progressBar.style.width = `${progress}%`;
+            loadingText.textContent = `Loading ${progress}%`;
+
+            if (progress === 50) {
+              progressContainer.style.display = "none";
+              loadingText.style.display = "none";
+            }
+
+            if (progress >= 100) clearInterval(progressInterval);
+          }, intervalTime);
+        }, 500);
+
+        activeVideo.addEventListener("ended", () => {
+          body.classList.add("loaded");
+        });
+
+        // Countdown
+        const countdownTimer = () => {
+          const targetDate = new Date("November 10, 2025 00:00:00").getTime();
+          const now = new Date().getTime();
+          const difference = targetDate - now;
+
+          if (difference > 0) {
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById("days").textContent = days.toString().padStart(2, "0");
+            document.getElementById("hours").textContent = hours.toString().padStart(2, "0");
+            document.getElementById("minutes").textContent = minutes.toString().padStart(2, "0");
+            document.getElementById("seconds").textContent = seconds.toString().padStart(2, "0");
+          }
+        };
+        countdownTimer();
+        setInterval(countdownTimer, 1000);
+
+        // Parallax
+        let ticking = false;
+        function updateParallax() {
+          const scrollTop = window.pageYOffset;
+          const parallax1 = document.getElementById("parallax1");
+          const parallax2 = document.getElementById("parallax2");
+          const parallax3 = document.getElementById("parallax3");
+
+          if (parallax1)
+            parallax1.style.transform = `translateY(${scrollTop * (window.innerWidth > 768 ? 0.3 : 0.1)}px)`;
+          if (parallax2)
+            parallax2.style.transform = `translateY(${scrollTop * (window.innerWidth > 768 ? 0.5 : 0.2)}px)`;
+          if (parallax3)
+            parallax3.style.transform = `translateY(${scrollTop * (window.innerWidth > 768 ? 0.4 : 0.15)}px)`;
+          ticking = false;
+        }
+        function requestTick() {
+          if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+          }
+        }
+        window.addEventListener("scroll", requestTick, { passive: true });
+        window.addEventListener("resize", updateParallax);
+
+        // Hamburger Menu
+        const hamburger = document.getElementById("hamburger");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const closeMenu = document.getElementById("closeMenu");
+
+        hamburger.addEventListener("click", () => {
+          mobileMenu.classList.add("active");
+          hamburger.classList.add("active");
+        });
+
+        closeMenu.addEventListener("click", () => {
+          mobileMenu.classList.remove("active");
+          hamburger.classList.remove("active");
+        });
+
+        document.addEventListener("click", (e) => {
+          if (
+            !mobileMenu.contains(e.target) &&
+            !hamburger.contains(e.target) &&
+            mobileMenu.classList.contains("active")
+          ) {
+            mobileMenu.classList.remove("active");
+            hamburger.classList.remove("active");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

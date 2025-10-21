@@ -915,7 +915,7 @@
       for (let i = 0; i < numFlakes; i++) {
         const flake = document.createElement("div");
         flake.classList.add("snowflake");
-        flake.innerHTML = "❄";
+        flake.innerHTML = "\u2744"; // Unicode for ❄
         flake.style.left = Math.random() * 100 + "vw";
         const size = Math.random() * 1.5 + 0.5;
         const fallDuration = Math.random() * 10 + 10;

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flag Rush - Spartanz 2.O</title>
+    <title>Treasure Hunt - Spartanz 2.O</title>
+    <meta name="description" content="Treasure Hunt event at Spartanz 2.O - Find hidden objects using clues across campus locations. Duration: 45-60 minutes. Teams of 3-4 members.">
     <link rel="icon" type="image/x-icon" href="assets/spartanz2k25logo.png" />
     <style>
         /* Reset & Base */
@@ -15,26 +16,26 @@
 
         body {
             font-family: "Arial", sans-serif;
-            background: linear-gradient(135deg, #1a0000, #4b0000);
-            color: #f0e6d2;
+            background: linear-gradient(135deg, #0a0a1a, #1a1a3a);
+            color: #e0e0ff;
             overflow-x: hidden;
             min-height: 100vh;
             position: relative;
         }
 
-        /* Iron Man Theme Elements */
+        /* Wolverine Theme Elements */
         .cyber-accent {
             color: #FFD700 !important;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
         }
 
         .cyber-glow {
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 15px rgba(65, 105, 225, 0.6);
         }
 
         /* Header Styling */
         .header {
-            background: rgba(30, 0, 0, 0.8);
+            background: rgba(10, 10, 26, 0.85);
             backdrop-filter: blur(10px);
             padding: 1.5rem;
             display: flex;
@@ -55,15 +56,15 @@
         .spartanz-logo {
             width: 60px;
             height: 60px;
-            background: url('https://placehold.co/60x60/FF0000/000000?text=IM') center/contain no-repeat;
+            background: url('https://placehold.co/60x60/FFD700/0a0a1a?text=WV') center/contain no-repeat;
             border-radius: 12px;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
         }
 
         .event-title {
             font-size: 2.2rem;
             font-weight: bold;
-            background: linear-gradient(to right, #FFD700, #FF4500);
+            background: linear-gradient(to right, #FFD700, #4169E1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
@@ -77,7 +78,7 @@
         }
 
         .section {
-            background: rgba(40, 0, 0, 0.75);
+            background: rgba(20, 20, 40, 0.8);
             border: 1px solid rgba(255, 215, 0, 0.3);
             border-radius: 15px;
             padding: 2.5rem;
@@ -122,7 +123,7 @@
 
         .rules-list li {
             padding: 1rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(224, 224, 255, 0.1);
             display: flex;
             gap: 1rem;
         }
@@ -134,7 +135,7 @@
         .rule-icon {
             min-width: 30px;
             height: 30px;
-            background: rgba(255, 0, 0, 0.3);
+            background: rgba(65, 105, 225, 0.3);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -142,7 +143,7 @@
             font-weight: bold;
             color: #FFD700;
             flex-shrink: 0;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 10px rgba(65, 105, 225, 0.6);
         }
 
         .rule-content h4 {
@@ -174,20 +175,20 @@
             height: 150px;
             background: url('assets/FlagRush.png') center/contain no-repeat;
             border-radius: 20px;
-            box-shadow: 0 0 30px #FF0000, 0 0 60px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 30px #4169E1, 0 0 60px rgba(65, 105, 225, 0.5);
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 30px #FF0000, 0 0 60px rgba(255, 0, 0, 0.5); }
+            0% { box-shadow: 0 0 30px #4169E1, 0 0 60px rgba(65, 105, 225, 0.5); }
             50% { box-shadow: 0 0 40px #FFD700, 0 0 80px rgba(255, 215, 0, 0.6); }
-            100% { box-shadow: 0 0 30px #FF0000, 0 0 60px rgba(255, 0, 0, 0.5); }
+            100% { box-shadow: 0 0 30px #4169E1, 0 0 60px rgba(65, 105, 225, 0.5); }
         }
 
         /* Register Button */
         .register-button {
             display: inline-block;
-            background: linear-gradient(135deg, #FF0000, #8B0000);
+            background: linear-gradient(135deg, #4169E1, #1a1a3a);
             color: #FFD700;
             padding: 1.2rem 2.5rem;
             border-radius: 50px;
@@ -195,7 +196,7 @@
             font-weight: bold;
             font-size: 1.3rem;
             margin: 2rem 0;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 20px rgba(65, 105, 225, 0.6);
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
@@ -217,8 +218,8 @@
 
         .register-button:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.6);
-            background: linear-gradient(135deg, #FF4500, #B22222);
+            box-shadow: 0 10px 25px rgba(65, 105, 225, 0.8), 0 0 30px rgba(255, 215, 0, 0.6);
+            background: linear-gradient(135deg, #5a7ee5, #2a2a4a);
         }
 
         .register-button:hover::before {
@@ -227,20 +228,20 @@
 
         .register-button:active {
             transform: translateY(0) scale(0.98);
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 15px rgba(65, 105, 225, 0.6);
         }
 
         /* Back to Events Button */
         .back-button {
             display: inline-block;
-            background: linear-gradient(135deg, #FFD700, #FF4500);
-            color: #000;
+            background: linear-gradient(135deg, #FFD700, #4169E1);
+            color: #0a0a1a;
             padding: 0.8rem 1.8rem;
             border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
             margin-top: 1.5rem;
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+            box-shadow: 0 4px 15px rgba(65, 105, 225, 0.4);
             transition: all 0.3s ease;
             border: 2px solid #FFD700;
         }
@@ -248,7 +249,7 @@
         .back-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
-            background: linear-gradient(135deg, #FFB300, #FF0000);
+            background: linear-gradient(135deg, #FFB300, #4169E1);
         }
 
         /* Button Container */
@@ -293,7 +294,7 @@
             .spartanz-logo {
                 width: 50px;
                 height: 50px;
-                background: url('https://placehold.co/50x50/FF0000/000000?text=IM') center/contain no-repeat;
+                background: url('https://placehold.co/50x50/FFD700/0a0a1a?text=WV') center/contain no-repeat;
             }
             
             .register-button {
@@ -338,7 +339,7 @@
             .spartanz-logo {
                 width: 40px;
                 height: 40px;
-                background: url('https://placehold.co/40x40/FF0000/000000?text=IM') center/contain no-repeat;
+                background: url('https://placehold.co/40x40/FFD700/0a0a1a?text=WV') center/contain no-repeat;
             }
             
             .register-button {
@@ -353,12 +354,39 @@
             padding: 2rem;
             margin-top: 3rem;
             border-top: 1px solid rgba(255, 215, 0, 0.3);
-            color: #ccc;
+            color: #b0b0d0;
             font-size: 0.9rem;
+        }
+        
+        /* Wolverine Claws Effect */
+        .claw-mark {
+            position: absolute;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .claw-1 {
+            top: 10%;
+            left: 5%;
+            font-size: 4rem;
+            transform: rotate(-20deg);
+            color: #FFD700;
+        }
+        
+        .claw-2 {
+            bottom: 15%;
+            right: 8%;
+            font-size: 5rem;
+            transform: rotate(15deg);
+            color: #4169E1;
         }
     </style>
 </head>
 <body>
+    <!-- Wolverine Claw Marks -->
+    <div class="claw-mark claw-1">X</div>
+    <div class="claw-mark claw-2">X</div>
+    
     <!-- Header -->
     <header class="header">
         <div class="logo-container">
@@ -377,7 +405,11 @@
 
         <div class="section">
             <h2 class="section-title">Event Description</h2>
-            <p>A high-paced cybersecurity capture-the-flag challenge where you'll hunt for flags, exploit vulnerabilities, and outsmart your opponents. Test your hacking skills in this intense competition!</p>
+            <p>A high-paced treasure hunt where teams will solve clues to find hidden objects across campus locations. Test your observation skills, teamwork, and speed in this intense competition!</p>
+            <p><strong>Duration:</strong> 45 – 60 minutes</p>
+            <p><strong>No. of Participants:</strong> Approximately 40 – 60 members</p>
+            <p><strong>Team Formation:</strong> 3 – 4 members per team</p>
+            <p><strong>Concept:</strong> Object finding using hidden clues across campus locations</p>
         </div>
 
         <div class="section">
@@ -387,21 +419,21 @@
                     <div class="rule-icon">1</div>
                     <div class="rule-content">
                         <h4>Team Size</h4>
-                        <p>1-2 participants per team</p>
+                        <p>3-4 participants per team</p>
                     </div>
                 </li>
                 <li>
                     <div class="rule-icon">2</div>
                     <div class="rule-content">
                         <h4>Equipment</h4>
-                        <p>Participants must bring their own laptops with necessary tools installed</p>
+                        <p>Mobile phones are allowed for navigation and communication</p>
                     </div>
                 </li>
                 <li>
                     <div class="rule-icon">3</div>
                     <div class="rule-content">
-                        <h4>Challenge Format</h4>
-                        <p>40 challenges of varying difficulty levels</p>
+                        <h4>Participation</h4>
+                        <p>All team members must stay together throughout the hunt</p>
                     </div>
                 </li>
             </ul>
@@ -414,48 +446,96 @@
                     <div class="rule-icon">S</div>
                     <div class="rule-content">
                         <h4>Points Allocation</h4>
-                        <p>Points awarded based on challenge difficulty - harder challenges yield more points</p>
+                        <p>Each found object = 1 point</p>
                     </div>
                 </li>
                 <li>
                     <div class="rule-icon">W</div>
                     <div class="rule-content">
                         <h4>Winners</h4>
-                        <p>Top 3 teams with the highest points at the end of the event will be declared winners</p>
+                        <p>Top team with the highest points at the end of the event will be declared winners</p>
                     </div>
                 </li>
             </ul>
         </div>
 
         <div class="section">
-            <h2 class="section-title cyber-accent">Competition Rules</h2>
+            <h2 class="section-title cyber-accent">📜 Rules & Guidelines</h2>
             <ul class="rules-list">
                 <li>
-                    <div class="rule-icon">⚠️</div>
+                    <div class="rule-icon">1</div>
                     <div class="rule-content">
-                        <h4>Strict Prohibition</h4>
-                        <p>Collaboration between teams and external help is strictly prohibited</p>
+                        <h4>Clue Distribution</h4>
+                        <p>Each team receives the same set of 10 clues at the start.</p>
                     </div>
                 </li>
                 <li>
-                    <div class="rule-icon">🚫</div>
-                    <div class="rule-content">
-                        <h4>Disqualification</h4>
-                        <p>Any form of misconduct or cheating will result in immediate disqualification</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">🔒</div>
-                    <div class="rule-content">
-                        <h4>Security</h4>
-                        <p>All attacks must be confined to the designated competition environment</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">⏱️</div>
+                    <div class="rule-icon">2</div>
                     <div class="rule-content">
                         <h4>Time Limit</h4>
-                        <p>The event will run for a fixed duration - all flags must be captured within this timeframe</p>
+                        <p>Teams must find as many hidden objects as possible within the given time (45–60 mins).</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">3</div>
+                    <div class="rule-content">
+                        <h4>Mobile Usage</h4>
+                        <p>Mobile phones are allowed, but most clues require on-campus observation.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">4</div>
+                    <div class="rule-content">
+                        <h4>Object Submission</h4>
+                        <p>Teams must submit collected objects to event volunteers immediately after finding them.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">5</div>
+                    <div class="rule-content">
+                        <h4>Winning Criteria</h4>
+                        <p>Winner is decided based on the maximum number of objects collected.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">6</div>
+                    <div class="rule-content">
+                        <h4>Tie-Breaker I</h4>
+                        <p>In case of a tie (teams collecting all 10 objects), the fastest team to return wins.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">7</div>
+                    <div class="rule-content">
+                        <h4>Tie-Breaker II</h4>
+                        <p>If still tied, a quick tie-breaker task (quiz/physical challenge) will decide the winner.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title cyber-accent">🏆 Winner Selection</h2>
+            <ul class="rules-list">
+                <li>
+                    <div class="rule-icon">1</div>
+                    <div class="rule-content">
+                        <h4>Primary Criteria</h4>
+                        <p>Team with the maximum number of objects.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">2</div>
+                    <div class="rule-content">
+                        <h4>Secondary Criteria</h4>
+                        <p>If Tie: Team that returns the fastest with all objects.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">3</div>
+                    <div class="rule-content">
+                        <h4>Final Criteria</h4>
+                        <p>If Still Tie: Tie-breaker challenge (quiz or physical task).</p>
                     </div>
                 </li>
             </ul>
@@ -470,8 +550,11 @@
         <div style="text-align: center;">
             <a href="#" class="back-button">BACK TO EVENTS</a>
         </div>
+        
+        <div class="footer">
+            <p>© 2025 Spartanz 2.O | Treasure Hunt Event</p>
+        </div>
     </div>
-
 
     <script>
         // Add subtle animation to rule icons on scroll
@@ -493,4 +576,4 @@
         });
     </script>
 </body>
-</html>
+    </html>

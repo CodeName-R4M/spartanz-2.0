@@ -950,24 +950,6 @@
     </div>
 
 
-    <script>
-        // Add subtle animation to rule icons on scroll
-        document.addEventListener('DOMContentLoaded', function() {
-            const ruleIcons = document.querySelectorAll('.rule-icon');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.transform = 'scale(1.1)';
-                        entry.target.style.transition = 'transform 0.3s ease';
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            ruleIcons.forEach(icon => {
-                observer.observe(icon);
-            });
-        });
-    </script>
+    
 </body>
 </html>

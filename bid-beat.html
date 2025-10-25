@@ -1,497 +1,341 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flag Rush - Spartanz 2.O</title>
-    <link rel="icon" type="image/x-icon" href="assets/spartanz2k25logo.png" />
-    <style>
-        /* Reset & Base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bid & Beat — Spartanz 2.O</title>
 
-        body {
-            font-family: "Arial", sans-serif;
-            background: linear-gradient(135deg, #1a0000, #4b0000);
-            color: #f0e6d2;
-            overflow-x: hidden;
-            min-height: 100vh;
-            position: relative;
-        }
+<!-- Disney / Fantasy Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Great+Vibes&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-        /* Iron Man Theme Elements */
-        .cyber-accent {
-            color: #FFD700 !important;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
-        }
+<style>
+:root {
+  --gold: #ffcc70;
+  --gold-soft: #ffe6a7;
+  --purple: #7d4cdb;
+  --purple-dark: #4a2b97;
+  --text: #fffaf2;
+  --muted: rgba(255, 246, 234, 0.9);
+  --bg-deep: #1a0530;
+  --card-bg: rgba(50, 10, 80, 0.55);
+}
 
-        .cyber-glow {
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
-        }
+/* Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* Header Styling */
-        .header {
-            background: rgba(30, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            border-bottom: 2px solid #FFD700;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at 10% 10%, rgba(125, 76, 219, 0.15), transparent),
+              radial-gradient(circle at 90% 80%, rgba(255, 200, 90, 0.1), transparent),
+              linear-gradient(180deg, #0c0125 0%, #20023b 60%, #31064d 100%);
+  color: var(--text);
+  overflow-x: hidden;
+  opacity: 0;
+  animation: pageFadeIn 2.5s forwards ease-out;
+}
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+/* Floating Lanterns */
+.lanterns {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+.lantern {
+  position: absolute;
+  bottom: -60px;
+  width: 30px;
+  height: 45px;
+  border-radius: 10px;
+  background: radial-gradient(circle at 30% 30%, var(--gold-soft), var(--gold));
+  box-shadow: 0 0 30px rgba(255, 215, 100, 0.4);
+  opacity: 0;
+  animation: floatLantern 15s linear infinite;
+}
+@keyframes floatLantern {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+}
 
-        .spartanz-logo {
-            width: 60px;
-            height: 60px;
-            background: url('https://placehold.co/60x60/FF0000/000000?text=IM') center/contain no-repeat;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
-        }
+/* Entry Animations */
+@keyframes pageFadeIn {
+  to { opacity: 1; }
+}
+@keyframes slideFadeIn {
+  0% { opacity: 0; transform: translateY(-30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroGlow {
+  0%,100% { text-shadow: 0 0 25px rgba(255, 210, 120, 0.3); }
+  50% { text-shadow: 0 0 45px rgba(255, 215, 150, 0.6); }
+}
+@keyframes sparkle {
+  0%,100% { opacity: 0.2; transform: translate(0,0) scale(1); }
+  50% { opacity: 1; transform: translate(-5px,-5px) scale(1.3); }
+}
 
-        .event-title {
-            font-size: 2.2rem;
-            font-weight: bold;
-            background: linear-gradient(to right, #FFD700, #FF4500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-        }
+/* Sparkles Overlay */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 10px var(--gold);
+  animation: sparkle 3s infinite;
+}
 
-        /* Main Content */
-        .container {
-            max-width: 1000px;
-            margin: 3rem auto;
-            padding: 0 1.5rem;
-        }
+/* Header */
+.header {
+  position: sticky;
+  top: 0;
+  background: rgba(20, 0, 40, 0.65);
+  border-bottom: 2px solid var(--gold);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  z-index: 10;
+  animation: slideFadeIn 1.8s ease-out forwards;
+}
 
-        .section {
-            background: rgba(40, 0, 0, 0.75);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 15px;
-            padding: 2.5rem;
-            margin-bottom: 2.5rem;
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
+.header-left {
+  text-align: left;
+}
+.main-title {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 2.1rem;
+  font-weight: 700;
+  background: linear-gradient(to right, var(--gold), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.sub-title {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
 
-        .section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, #FFD700, transparent);
-        }
+/* Buttons */
+.nav-buttons {
+  display: flex;
+  gap: 0.6rem;
+}
+.btn {
+  background: linear-gradient(135deg, var(--purple), var(--gold));
+  color: #240026;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 215, 120, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(255, 215, 120, 0.6);
+}
 
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #FFD700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 2.5rem 1.5rem 1.5rem;
+  animation: slideFadeIn 2s ease-out forwards;
+}
+.hero h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.2rem;
+  background: linear-gradient(to right, var(--gold), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 25px rgba(255, 210, 120, 0.3);
+  animation: heroGlow 3s infinite alternate;
+}
+.hero p {
+  font-size: 1.2rem;
+  color: var(--muted);
+  margin-top: 0.3rem;
+  font-style: italic;
+}
 
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.5), transparent);
-        }
+/* Main Container */
+.container {
+  max-width: 950px;
+  margin: 2.5rem auto;
+  padding: 0 1.5rem;
+  text-align: center;
+  animation: slideFadeIn 2.2s ease-out forwards;
+}
 
-        /* Rules List */
-        .rules-list {
-            list-style: none;
-            padding-left: 0;
-        }
+.section {
+  background: var(--card-bg);
+  border-radius: 15px;
+  padding: 2.2rem 2rem;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 25px rgba(255, 200, 120, 0.15);
+  backdrop-filter: blur(10px);
+  margin-bottom: 2.5rem;
+}
 
-        .rules-list li {
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            gap: 1rem;
-        }
+.section h2 {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 2rem;
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  margin-bottom: 1rem;
+}
 
-        .rules-list li:last-child {
-            border-bottom: none;
-        }
+.section p, .section ul {
+  margin-top: 1rem;
+  font-size: 1.05rem;
+  color: var(--muted);
+  text-align: left;
+  line-height: 1.8;
+}
+ul li { margin-bottom: 0.7rem; }
 
-        .rule-icon {
-            min-width: 30px;
-            height: 30px;
-            background: rgba(255, 0, 0, 0.3);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #FFD700;
-            flex-shrink: 0;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
-        }
+/* Rapunzel GIF */
+.rapunzel-gif {
+  width: 240px;
+  border-radius: 15px;
+  margin: 1.8rem auto 0;
+  display: block;
+  box-shadow: 0 0 35px rgba(255, 210, 120, 0.5);
+  animation: fadeIn 3s ease-in-out forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
 
-        .rule-content h4 {
-            margin-bottom: 0.5rem;
-            color: #FFD700;
-        }
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  animation: slideFadeIn 2.4s ease-out forwards;
+}
 
-        /* Event Logo Visual */
-        .logo-visual {
-            position: relative;
-            height: 300px;
-            margin: 2rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-container-main {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .event-logo {
-            width: 150px;
-            height: 150px;
-            background: url('assets/FlagRush.png') center/contain no-repeat;
-            border-radius: 20px;
-            box-shadow: 0 0 30px #FF0000, 0 0 60px rgba(255, 0, 0, 0.5);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 30px #FF0000, 0 0 60px rgba(255, 0, 0, 0.5); }
-            50% { box-shadow: 0 0 40px #FFD700, 0 0 80px rgba(255, 215, 0, 0.6); }
-            100% { box-shadow: 0 0 30px #FF0000, 0 0 60px rgba(255, 0, 0, 0.5); }
-        }
-
-        /* Register Button */
-        .register-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #FF0000, #8B0000);
-            color: #FFD700;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.3rem;
-            margin: 2rem 0;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid #FFD700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .register-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
-            transition: 0.5s;
-        }
-
-        .register-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.6);
-            background: linear-gradient(135deg, #FF4500, #B22222);
-        }
-
-        .register-button:hover::before {
-            left: 100%;
-        }
-
-        .register-button:active {
-            transform: translateY(0) scale(0.98);
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
-        }
-
-        /* Back to Events Button */
-        .back-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #FFD700, #FF4500);
-            color: #000;
-            padding: 0.8rem 1.8rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 1.5rem;
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
-            transition: all 0.3s ease;
-            border: 2px solid #FFD700;
-        }
-
-        .back-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
-            background: linear-gradient(135deg, #FFB300, #FF0000);
-        }
-
-        /* Button Container */
-        .button-container {
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .event-title {
-                font-size: 1.8rem;
-            }
-            
-            .section {
-                padding: 1.8rem;
-            }
-            
-            .section-title {
-                font-size: 1.7rem;
-            }
-            
-            .logo-visual {
-                height: 200px;
-            }
-            
-            .logo-container-main {
-                width: 150px;
-                height: 150px;
-            }
-            
-            .event-logo {
-                width: 120px;
-                height: 120px;
-            }
-            
-            .spartanz-logo {
-                width: 50px;
-                height: 50px;
-                background: url('https://placehold.co/50x50/FF0000/000000?text=IM') center/contain no-repeat;
-            }
-            
-            .register-button {
-                padding: 1rem 2rem;
-                font-size: 1.1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .event-title {
-                font-size: 1.5rem;
-            }
-            
-            .section {
-                padding: 1.5rem;
-            }
-            
-            .section-title {
-                font-size: 1.5rem;
-            }
-            
-            .rule-icon {
-                min-width: 25px;
-                height: 25px;
-                font-size: 0.9rem;
-            }
-            
-            .logo-visual {
-                height: 180px;
-            }
-            
-            .logo-container-main {
-                width: 120px;
-                height: 120px;
-            }
-            
-            .event-logo {
-                width: 100px;
-                height: 100px;
-            }
-            
-            .spartanz-logo {
-                width: 40px;
-                height: 40px;
-                background: url('https://placehold.co/40x40/FF0000/000000?text=IM') center/contain no-repeat;
-            }
-            
-            .register-button {
-                padding: 0.9rem 1.8rem;
-                font-size: 1rem;
-            }
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-            border-top: 1px solid rgba(255, 215, 0, 0.3);
-            color: #ccc;
-            font-size: 0.9rem;
-        }
-    </style>
+/* Responsive */
+@media (max-width: 768px) {
+  .main-title { font-size: 1.8rem; }
+  .hero h1 { font-size: 2.5rem; }
+  .section h2 { font-size: 1.6rem; }
+  .section p, .section ul { font-size: 0.95rem; }
+}
+@media (max-width: 480px) {
+  .header { flex-direction: column; text-align: center; gap: 0.6rem; }
+  .main-title { font-size: 1.6rem; }
+  .sub-title { font-size: 0.8rem; }
+  .btn { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+  .hero h1 { font-size: 2.1rem; }
+  .section h2 { font-size: 1.4rem; }
+  .section p, .section ul { font-size: 0.9rem; }
+}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="logo-container">
-            <div class="spartanz-logo"></div>
-            <h1 class="event-title">Bid and Beat
-            </h1>
-        </div>
-    </header>
 
-    <!-- Main Content -->
-    <div class="container">
-        <div class="logo-visual">
-            <div class="logo-container-main">
-                <div class="event-logo"></div>
-            </div>
-        </div>
+<!-- ===================== Disney-Style Intro ===================== -->
+<div id="introOverlay">
+  <h1>Spartanz 2.0 Presents</h1>
+  <h2>🎶 Bid & Beat 🎶</h2>
+</div>
 
-        <div class="section">
-            <h2 class="section-title">Event Description</h2>
-            <p>A high-paced cybersecurity capture-the-flag challenge where you'll hunt for flags, exploit vulnerabilities, and outsmart your opponents. Test your hacking skills in this intense competition!</p>
-        </div>
+<!-- ===================== Main Page ===================== -->
+<div class="lanterns" id="lanterns"></div>
 
-        <div class="section">
-            <h2 class="section-title">Team Requirements</h2>
-            <ul class="rules-list">
-                <li>
-                    <div class="rule-icon">1</div>
-                    <div class="rule-content">
-                        <h4>Team Size</h4>
-                        <p>1-2 participants per team</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">2</div>
-                    <div class="rule-content">
-                        <h4>Equipment</h4>
-                        <p>Participants must bring their own laptops with necessary tools installed</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">3</div>
-                    <div class="rule-content">
-                        <h4>Challenge Format</h4>
-                        <p>40 challenges of varying difficulty levels</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
+<header class="header">
+  <div class="header-left">
+    <div class="main-title">Spartanz 2.0</div>
+    <div class="sub-title">Department of Computer Science Engineering (Cyber Security)</div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn" onclick="window.history.back()">⬅ Back</button>
+    <button class="btn" onclick="alert('Registration Coming Soon!')">Register</button>
+  </div>
+</header>
 
-        <div class="section">
-            <h2 class="section-title">Scoring System</h2>
-            <ul class="rules-list">
-                <li>
-                    <div class="rule-icon">S</div>
-                    <div class="rule-content">
-                        <h4>Points Allocation</h4>
-                        <p>Points awarded based on challenge difficulty - harder challenges yield more points</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">W</div>
-                    <div class="rule-content">
-                        <h4>Winners</h4>
-                        <p>Top 3 teams with the highest points at the end of the event will be declared winners</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
+<section class="hero">
+  <h1>🎶 Bid & Beat 🎶</h1>
+  <p>The Ultimate Musical Bidding Showdown — Sing • Bid • Win ✨</p>
+</section>
 
-        <div class="section">
-            <h2 class="section-title cyber-accent">Competition Rules</h2>
-            <ul class="rules-list">
-                <li>
-                    <div class="rule-icon">⚠️</div>
-                    <div class="rule-content">
-                        <h4>Strict Prohibition</h4>
-                        <p>Collaboration between teams and external help is strictly prohibited</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">🚫</div>
-                    <div class="rule-content">
-                        <h4>Disqualification</h4>
-                        <p>Any form of misconduct or cheating will result in immediate disqualification</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">🔒</div>
-                    <div class="rule-content">
-                        <h4>Security</h4>
-                        <p>All attacks must be confined to the designated competition environment</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">⏱️</div>
-                    <div class="rule-content">
-                        <h4>Time Limit</h4>
-                        <p>The event will run for a fixed duration - all flags must be captured within this timeframe</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
+<main class="container">
+  <section class="section">
+    <h2>🎤 How to Play</h2>
+    <p><strong>🌟 Objective:</strong> Compete in teams to bid and sing songs featuring the named actor — the highest bidder must perform all their claimed songs correctly to win points!</p>
+    <p><strong>🧑‍🤝‍🧑 Form Teams:</strong> 2 members per team.</p>
+    <p><strong>📣 Actor Announced:</strong> The host reveals an actor (e.g., “Shah Rukh Khan”).</p>
+    <p><strong>🙋‍♀ Start Bidding:</strong> Teams quietly decide and bid how many songs they can sing. Example: “We bid 3!”</p>
+    <p><strong>📈 Bidding War:</strong> Continue until one team wins the bid.</p>
+    <p><strong>🏆 Win the Bid:</strong> The winning team must sing all songs they claimed — with movie names.</p>
+    <p><strong>🎵 Beat the Bid:</strong> Each correct song = points! Fail and the next team can steal.</p>
+    <p><strong>🔁 Next Round:</strong> New actor, new energy!</p>
 
-        <div class="button-container">
-            <a href="https://forms.gle/Hzq3xrZmpnq862Zt8" class="register-button" target="_blank">
-                Register Now
-            </a>
-        </div>
+    <img src="/assets/bid-beat-logo.jpg" alt="Rapunzel from Tangled" class="rapunzel-gif" />
+  </section>
 
-        <div style="text-align: center;">
-            <a href="#" class="back-button">BACK TO EVENTS</a>
-        </div>
-    </div>
+  <section class="section">
+    <h2>📜 Rules & Details</h2>
+    <ul>
+      <li><strong>Valid Songs ✅</strong> — Must be from movies featuring the given actor (cameos count).</li>
+      <li><strong>No Repeats 🚫</strong> — Same song can’t be reused in a round.</li>
+      <li><strong>No Phones 📵</strong> — Devices banned during play. Violation = -10 points.</li>
+      <li><strong>Singing Requirement 🎙</strong> — Minimum 2–3 lines or chorus. No humming.</li>
+      <li><strong>Time Limits ⏳</strong> — 10s for bidding, 30s per song performance.</li>
+      <li><strong>Judge’s Call 🧑‍⚖</strong> — Host’s decision is final.</li>
+      <li><strong>Winning 🏅</strong> — Highest total points = “Bid & Beat” Champion!</li>
+    </ul>
+  </section>
 
+  <section class="section">
+    <h2>🕓 Event Duration</h2>
+    <p><strong>Total:</strong> 45–60 minutes</p>
+    <p><strong>Rounds:</strong> 5–6</p>
+    <p><strong>Each Round:</strong> ~5 minutes (bidding + performance)</p>
+  </section>
+</main>
 
-    <script>
-        // Add subtle animation to rule icons on scroll
-        document.addEventListener('DOMContentLoaded', function() {
-            const ruleIcons = document.querySelectorAll('.rule-icon');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.transform = 'scale(1.1)';
-                        entry.target.style.transition = 'transform 0.3s ease';
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            ruleIcons.forEach(icon => {
-                observer.observe(icon);
-            });
-        });
-    </script>
+<footer>© 2025 Spartanz 2.O | Bid & Beat — Sing. Shine. Soar. 🎶</footer>
+
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2023/05/21/audio_0de2c2f29b.mp3?filename=soft-fantasy-background-146937.mp3" type="audio/mp3">
+</audio>
+
+<script>
+const lanternContainer = document.getElementById('lanterns');
+function createLanterns(count = 25) {
+  for (let i = 0; i < count; i++) {
+    const lantern = document.createElement('div');
+    lantern.classList.add('lantern');
+    lantern.style.left = Math.random() * 100 + '%';
+    lantern.style.animationDuration = 10 + Math.random() * 15 + 's';
+    lantern.style.animationDelay = Math.random() * -10 + 's';
+    lanternContainer.appendChild(lantern);
+  }
+}
+createLanterns(25);
+
+// Disney-style intro animation sequence
+const introOverlay = document.getElementById('introOverlay');
+const introText = introOverlay.querySelector('h1');
+const mainTitle = introOverlay.querySelector('h2');
+
+introText.style.animation = "fadeInUp 1.5s forwards";
+setTimeout(() => {
+  mainTitle.style.animation = "fadeInUp 1.5s forwards";
+}, 1800);
+
+// Remove overlay after animation
+setTimeout(() => {
+  introOverlay.style.animation = "fadeOutOverlay 1s forwards";
+}, 4000);
+</script>
+
 </body>
 </html>

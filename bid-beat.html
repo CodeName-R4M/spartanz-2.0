@@ -5,336 +5,317 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Bid & Beat — Spartanz 2.O</title>
 
-<!-- Disney / Fantasy Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Great+Vibes&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --gold: #ffcc70;
-  --gold-soft: #ffe6a7;
-  --purple: #7d4cdb;
-  --purple-dark: #4a2b97;
-  --text: #fffaf2;
-  --muted: rgba(255, 246, 234, 0.9);
-  --bg-deep: #1a0530;
-  --card-bg: rgba(50, 10, 80, 0.55);
-}
-
-/* Reset */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle at 10% 10%, rgba(125, 76, 219, 0.15), transparent),
-              radial-gradient(circle at 90% 80%, rgba(255, 200, 90, 0.1), transparent),
-              linear-gradient(180deg, #0c0125 0%, #20023b 60%, #31064d 100%);
-  color: var(--text);
-  overflow-x: hidden;
-  opacity: 0;
-  animation: pageFadeIn 2.5s forwards ease-out;
-}
-
-/* Floating Lanterns */
-.lanterns {
+/* ===================== Intro Overlay ===================== */
+#introOverlay {
   position: fixed;
   inset: 0;
-  pointer-events: none;
+  background: radial-gradient(circle, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.95) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
   overflow: hidden;
-  z-index: 0;
 }
-.lantern {
+
+#introOverlay h1, #introOverlay h2 {
+  margin: 0.3rem 0;
+  color: #ffcc70;
+  font-family: 'Cinzel Decorative', cursive;
+  text-shadow: 0 0 10px #ffcc70, 0 0 20px #ffe6a7, 0 0 30px #ffcc70;
+  opacity: 0;
+}
+
+#introOverlay h1 { font-size: 3rem; }
+#introOverlay h2 { font-size: 4rem; }
+
+/* ===================== Keyframes ===================== */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeOutOverlay {
+  0% { opacity: 1; }
+  100% { opacity: 0; pointer-events: none; }
+}
+
+/* Enhanced Lantern Float Animation (Intro) */
+@keyframes floatLanternIntro {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  5% { opacity: 1; }
+  100% { transform: translateY(-120vh) rotate(5deg); opacity: 0; }
+}
+
+/* Continuous Lantern Float Animation (Main Page) */
+@keyframes floatLanternMain {
+  from { transform: translateY(0); opacity: 0.4; } /* Start slightly translucent */
+  to { transform: translateY(-120vh); opacity: 0; }
+}
+
+/* Intro Lanterns Styling */
+.entryLantern {
   position: absolute;
   bottom: -60px;
-  width: 30px;
+  width: 28px;
   height: 45px;
   border-radius: 10px;
-  background: radial-gradient(circle at 30% 30%, var(--gold-soft), var(--gold));
-  box-shadow: 0 0 30px rgba(255, 215, 100, 0.4);
+  background: radial-gradient(circle at 30% 30%, #ffe6a7, #ffcc70);
+  box-shadow: 0 0 30px rgba(255, 215, 100, 0.5);
   opacity: 0;
-  animation: floatLantern 15s linear infinite;
-}
-@keyframes floatLantern {
-  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-  10% { opacity: 1; }
-  100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+  animation: floatLanternIntro 8s linear forwards;
 }
 
-/* Entry Animations */
-@keyframes pageFadeIn {
-  to { opacity: 1; }
-}
-@keyframes slideFadeIn {
-  0% { opacity: 0; transform: translateY(-30px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-@keyframes heroGlow {
-  0%,100% { text-shadow: 0 0 25px rgba(255, 210, 120, 0.3); }
-  50% { text-shadow: 0 0 45px rgba(255, 215, 150, 0.6); }
-}
-@keyframes sparkle {
-  0%,100% { opacity: 0.2; transform: translate(0,0) scale(1); }
-  50% { opacity: 1; transform: translate(-5px,-5px) scale(1.3); }
+/* Main Page Lanterns Styling (Larger, Rectangular, and Gold) */
+.mainLantern {
+  position: fixed; /* Fixed position for ambient effect */
+  bottom: -60px;
+  width: 25px; /* Slightly smaller than intro for ambience */
+  height: 40px; 
+  border-radius: 8px; /* Rectangular shape */
+  background: radial-gradient(circle at 30% 30%, #ffe6a7, #ffcc70);
+  box-shadow: 0 0 15px rgba(255, 215, 100, 0.4);
+  opacity: 0.4; /* Ambient transparency */
+  animation: floatLanternMain linear infinite;
+  z-index: 1;
 }
 
-/* Sparkles Overlay */
-.sparkle {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 10px var(--gold);
-  animation: sparkle 3s infinite;
+/* ===================== Main Page ===================== */
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #1b1f3a, #0d0f20);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
 }
 
-/* Header */
+.main-page { display: none; font-family: 'Poppins', sans-serif; }
+
 .header {
-  position: sticky;
-  top: 0;
-  background: rgba(20, 0, 40, 0.65);
-  border-bottom: 2px solid var(--gold);
-  backdrop-filter: blur(10px);
+  position: sticky; top: 0;
+  background: rgba(20,0,40,0.6);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #ffe6a7;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
-  z-index: 10;
-  animation: slideFadeIn 1.8s ease-out forwards;
+  padding: 0.8rem 1.5rem;
+  z-index: 100;
 }
-
-.header-left {
-  text-align: left;
-}
+.header-left { text-align: left; }
 .main-title {
-  font-family: 'Cinzel Decorative', cursive;
-  font-size: 2.1rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  background: linear-gradient(to right, var(--gold), var(--purple));
+  background: linear-gradient(to right, #ffcc70, #7d4cdb);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.sub-title {
-  font-size: 0.95rem;
-  color: var(--muted);
-}
+.sub-title { font-size: 1rem; color: rgba(255,246,234,0.9); }
 
-/* Buttons */
-.nav-buttons {
-  display: flex;
-  gap: 0.6rem;
-}
+.nav-buttons { display: flex; gap: 0.6rem; }
 .btn {
-  background: linear-gradient(135deg, var(--purple), var(--gold));
+  background: linear-gradient(135deg, #7d4cdb, #ffcc70);
   color: #240026;
   font-weight: 600;
   padding: 0.5rem 1rem;
-  border-radius: 25px;
+  border-radius: 30px;
   border: none;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(255, 215, 120, 0.3);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(255, 215, 120, 0.6);
-}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 0 15px rgba(255, 215, 120, 0.6); }
 
-/* Hero */
-.hero {
-  text-align: center;
-  padding: 2.5rem 1.5rem 1.5rem;
-  animation: slideFadeIn 2s ease-out forwards;
-}
+.hero { text-align: center; padding: 3rem 1rem 2rem; position: relative; overflow: hidden; }
 .hero h1 {
   font-family: 'Great Vibes', cursive;
-  font-size: 3.2rem;
-  background: linear-gradient(to right, var(--gold), var(--purple));
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #ffcc70, #7d4cdb);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 25px rgba(255, 210, 120, 0.3);
-  animation: heroGlow 3s infinite alternate;
 }
-.hero p {
-  font-size: 1.2rem;
-  color: var(--muted);
-  margin-top: 0.3rem;
-  font-style: italic;
-}
+.hero p { font-size: 1.2rem; color: rgba(255,246,234,0.9); margin-top: 0.5rem; }
 
-/* Main Container */
-.container {
-  max-width: 950px;
-  margin: 2.5rem auto;
-  padding: 0 1.5rem;
-  text-align: center;
-  animation: slideFadeIn 2.2s ease-out forwards;
-}
+.container { max-width: 950px; margin: 2.5rem auto; padding: 0 1.5rem; }
 
 .section {
-  background: var(--card-bg);
+  background: rgba(60,20,90,0.55);
   border-radius: 15px;
-  padding: 2.2rem 2rem;
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  box-shadow: 0 0 25px rgba(255, 200, 120, 0.15);
+  padding: 2rem 1.5rem;
+  border: 1px solid rgba(255,215,0,0.3);
+  box-shadow: 0 0 25px rgba(255,200,120,0.15);
   backdrop-filter: blur(10px);
   margin-bottom: 2.5rem;
+  z-index: 10; /* Ensure content is above ambient lanterns */
+  position: relative;
 }
-
 .section h2 {
   font-family: 'Cinzel Decorative', cursive;
   font-size: 2rem;
-  color: var(--gold);
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  color: #ffcc70;
+  text-shadow: 0 0 20px rgba(255,215,0,0.6);
   margin-bottom: 1rem;
+  text-align: center;
 }
-
-.section p, .section ul {
-  margin-top: 1rem;
-  font-size: 1.05rem;
-  color: var(--muted);
-  text-align: left;
-  line-height: 1.8;
-}
+.section p, .section ul { margin-top: 1rem; font-size: 1.05rem; color: rgba(255,246,234,0.9); line-height: 1.8; }
 ul li { margin-bottom: 0.7rem; }
 
-/* Rapunzel GIF */
-.rapunzel-gif {
-  width: 240px;
-  border-radius: 15px;
-  margin: 1.8rem auto 0;
-  display: block;
-  box-shadow: 0 0 35px rgba(255, 210, 120, 0.5);
-  animation: fadeIn 3s ease-in-out forwards;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+.logo-img { 
+    display: block; 
+    margin: 2rem auto; 
+    width: 280px; 
+    max-width: 90%; 
+    border-radius: 10px; 
+    box-shadow: 0 0 20px #ffcc70; 
 }
 
-/* Footer */
-footer {
-  text-align: center;
-  padding: 1.5rem;
-  font-size: 0.9rem;
-  color: var(--muted);
-  animation: slideFadeIn 2.4s ease-out forwards;
-}
+footer { text-align: center; padding: 1.5rem; font-size: 0.9rem; color: rgba(255,246,234,0.9); }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .main-title { font-size: 1.8rem; }
-  .hero h1 { font-size: 2.5rem; }
-  .section h2 { font-size: 1.6rem; }
-  .section p, .section ul { font-size: 0.95rem; }
+  .hero h1 { font-size: 2.3rem; } 
+  .hero p { font-size: 1rem; } 
+  .section h2 { font-size: 1.6rem; } 
+  .section p, .section ul { font-size: 0.95rem; } 
+  .logo-img { width: 220px; }
 }
 @media (max-width: 480px) {
-  .header { flex-direction: column; text-align: center; gap: 0.6rem; }
-  .main-title { font-size: 1.6rem; }
-  .sub-title { font-size: 0.8rem; }
-  .btn { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
-  .hero h1 { font-size: 2.1rem; }
-  .section h2 { font-size: 1.4rem; }
+  .header { flex-direction: column; text-align: center; gap: 0.5rem; } 
+  .main-title { font-size: 1.5rem; } 
+  .sub-title { font-size: 0.8rem; } 
+  .btn { padding: 0.4rem 0.8rem; font-size: 0.85rem; } 
+  .hero h1 { font-size: 1.9rem; } 
+  .section h2 { font-size: 1.4rem; } 
   .section p, .section ul { font-size: 0.9rem; }
+  #introOverlay h1 { font-size: 2rem; }
+  #introOverlay h2 { font-size: 3rem; }
 }
 </style>
 </head>
 <body>
 
-<!-- ===================== Disney-Style Intro ===================== -->
 <div id="introOverlay">
   <h1>Spartanz 2.0 Presents</h1>
   <h2>🎶 Bid & Beat 🎶</h2>
+  <div id="entryLanterns"></div>
 </div>
 
-<!-- ===================== Main Page ===================== -->
-<div class="lanterns" id="lanterns"></div>
+<div class="main-page">
+  <div id="ambientLanterns" style="position: fixed; inset: 0; pointer-events: none; z-index: 1;"></div>
 
-<header class="header">
-  <div class="header-left">
-    <div class="main-title">Spartanz 2.0</div>
-    <div class="sub-title">Department of Computer Science Engineering (Cyber Security)</div>
-  </div>
-  <div class="nav-buttons">
-    <button class="btn" onclick="window.history.back()">⬅ Back</button>
-    <button class="btn" onclick="alert('Registration Coming Soon!')">Register</button>
-  </div>
-</header>
+  <header class="header">
+    <div class="header-left">
+      <div class="main-title">Spartanz 2.0</div>
+      <div class="sub-title">Department of Computer Science Engineering (Cyber Security)</div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn" onclick="window.history.back()">⬅ Back</button>
+      <button class="btn" onclick="alert('Registration Coming Soon!')">Register</button>
+    </div>
+  </header>
 
-<section class="hero">
-  <h1>🎶 Bid & Beat 🎶</h1>
-  <p>The Ultimate Musical Bidding Showdown — Sing • Bid • Win ✨</p>
-</section>
-
-<main class="container">
-  <section class="section">
-    <h2>🎤 How to Play</h2>
-    <p><strong>🌟 Objective:</strong> Compete in teams to bid and sing songs featuring the named actor — the highest bidder must perform all their claimed songs correctly to win points!</p>
-    <p><strong>🧑‍🤝‍🧑 Form Teams:</strong> 2 members per team.</p>
-    <p><strong>📣 Actor Announced:</strong> The host reveals an actor (e.g., “Shah Rukh Khan”).</p>
-    <p><strong>🙋‍♀ Start Bidding:</strong> Teams quietly decide and bid how many songs they can sing. Example: “We bid 3!”</p>
-    <p><strong>📈 Bidding War:</strong> Continue until one team wins the bid.</p>
-    <p><strong>🏆 Win the Bid:</strong> The winning team must sing all songs they claimed — with movie names.</p>
-    <p><strong>🎵 Beat the Bid:</strong> Each correct song = points! Fail and the next team can steal.</p>
-    <p><strong>🔁 Next Round:</strong> New actor, new energy!</p>
-
-    <img src="/assets/bid-beat-logo.jpg" alt="Rapunzel from Tangled" class="rapunzel-gif" />
+  <section class="hero">
+    <h1>🎶 Bid & Beat 🎶</h1>
+    <p>The Ultimate Musical Bidding Showdown — Sing • Bid • Win ✨</p>
   </section>
 
-  <section class="section">
-    <h2>📜 Rules & Details</h2>
-    <ul>
-      <li><strong>Valid Songs ✅</strong> — Must be from movies featuring the given actor (cameos count).</li>
-      <li><strong>No Repeats 🚫</strong> — Same song can’t be reused in a round.</li>
-      <li><strong>No Phones 📵</strong> — Devices banned during play. Violation = -10 points.</li>
-      <li><strong>Singing Requirement 🎙</strong> — Minimum 2–3 lines or chorus. No humming.</li>
-      <li><strong>Time Limits ⏳</strong> — 10s for bidding, 30s per song performance.</li>
-      <li><strong>Judge’s Call 🧑‍⚖</strong> — Host’s decision is final.</li>
-      <li><strong>Winning 🏅</strong> — Highest total points = “Bid & Beat” Champion!</li>
-    </ul>
-  </section>
+  <main class="container">
+    <section class="section">
+      <h2>🎤 How to Play</h2>
+        
+      <img src="/assets/bid-beat-logo.png" alt="Bid and Beat Logo" class="logo-img" />
 
-  <section class="section">
-    <h2>🕓 Event Duration</h2>
-    <p><strong>Total:</strong> 45–60 minutes</p>
-    <p><strong>Rounds:</strong> 5–6</p>
-    <p><strong>Each Round:</strong> ~5 minutes (bidding + performance)</p>
-  </section>
-</main>
+      <p><strong>🌟 Objective:</strong> Compete in teams to bid and sing songs featuring the named actor — the highest bidder must perform all their claimed songs correctly to win points!</p>
+      <p><strong>🧑‍🤝‍🧑 Form Teams:</strong> 2 members per team.</p>
+      <p><strong>📣 Actor Announced:</strong> The host reveals an actor (e.g., “Shah Rukh Khan”).</p>
+      <p><strong>🙋‍♀ Start Bidding:</strong> Teams quietly decide and bid how many songs they can sing. Example: “We bid 3!”</p>
+      <p><strong>📈 Bidding War:</strong> Continue until one team wins the bid.</p>
+      <p><strong>🏆 Win the Bid:</strong> The winning team must sing all songs they claimed — with movie names.</p>
+      <p><strong>🎵 Beat the Bid:</strong> Each correct song = points! Fail and the next team can steal.</p>
+      <p><strong>🔁 Next Round:</strong> New actor, new energy!</p>
+    </section>
 
-<footer>© 2025 Spartanz 2.O | Bid & Beat — Sing. Shine. Soar. 🎶</footer>
+    <section class="section">
+      <h2>📜 Rules & Details</h2>
+      <ul>
+        <li><strong>Valid Songs ✅</strong> — Must be from movies featuring the given actor (cameos count).</li>
+        <li><strong>No Repeats 🚫</strong> — Same song can’t be reused in a round.</li>
+        <li><strong>No Phones 📵</strong> — Devices banned during play. Violation = -10 points.</li>
+        <li><strong>Singing Requirement 🎙</strong> — Minimum 2–3 lines or chorus. No humming.</li>
+        <li><strong>Time Limits ⏳</strong> — 10s for bidding, 30s per song performance.</li>
+        <li><strong>Judge’s Call 🧑‍⚖</strong> — Host’s decision is final.</li>
+        <li><strong>Winning 🏅</strong> — Highest total points = “Bid & Beat” Champion!</li>
+      </ul>
+    </section>
 
+    <section class="section">
+      <h2>🕓 Event Duration</h2>
+      <p><strong>Total:</strong> 45–60 minutes</p>
+      <p><strong>Rounds:</strong> 5–6</p>
+      <p><strong>Each Round:</strong> ~5 minutes (bidding + performance)</p>
+    </section>
+  </main>
+
+  <footer>© 2025 Spartanz 2.O | Bid & Beat — Sing. Shine. Soar. 🎶</footer>
+</div>
 <audio autoplay loop>
   <source src="https://cdn.pixabay.com/download/audio/2023/05/21/audio_0de2c2f29b.mp3?filename=soft-fantasy-background-146937.mp3" type="audio/mp3">
 </audio>
 
 <script>
-const lanternContainer = document.getElementById('lanterns');
-function createLanterns(count = 25) {
+const introOverlay = document.getElementById('introOverlay');
+const entryLanternsContainer = document.getElementById('entryLanterns');
+const ambientLanternsContainer = document.getElementById('ambientLanterns');
+const mainPage = document.querySelector('.main-page');
+
+// --- Lantern Creation Logic ---
+function createLanterns(container, className, count, minDuration, maxDuration, delayMultiplier) {
   for (let i = 0; i < count; i++) {
     const lantern = document.createElement('div');
-    lantern.classList.add('lantern');
+    lantern.classList.add(className);
+    
+    // Randomize position, speed, and delay
     lantern.style.left = Math.random() * 100 + '%';
-    lantern.style.animationDuration = 10 + Math.random() * 15 + 's';
-    lantern.style.animationDelay = Math.random() * -10 + 's';
-    lanternContainer.appendChild(lantern);
+    lantern.style.animationDuration = (minDuration + Math.random() * (maxDuration - minDuration)) + 's';
+    lantern.style.animationDelay = (Math.random() * delayMultiplier * -1) + 's'; // Use negative delay for staggered start
+    container.appendChild(lantern);
   }
 }
-createLanterns(25);
 
-// Disney-style intro animation sequence
-const introOverlay = document.getElementById('introOverlay');
+// 1. Create Intro Lanterns (for the animation sequence)
+createLanterns(entryLanternsContainer, 'entryLantern', 35, 6, 10, 3);
+
+// 2. Disney-style intro animation sequence
 const introText = introOverlay.querySelector('h1');
 const mainTitle = introOverlay.querySelector('h2');
 
-introText.style.animation = "fadeInUp 1.5s forwards";
+setTimeout(() => {
+    introText.style.animation = "fadeInUp 1.5s forwards";
+}, 500);
+
 setTimeout(() => {
   mainTitle.style.animation = "fadeInUp 1.5s forwards";
-}, 1800);
+}, 2000);
 
-// Remove overlay after animation
+
+// 3. Remove overlay and show content after animation
 setTimeout(() => {
   introOverlay.style.animation = "fadeOutOverlay 1s forwards";
-}, 4000);
+  
+  // Create ambient lanterns right before the main page is displayed
+  // Parameters: Container, Class, Count, Min Duration, Max Duration, Delay Multiplier
+  createLanterns(ambientLanternsContainer, 'mainLantern', 15, 10, 25, 15); 
+  
+  setTimeout(() => {
+      introOverlay.remove();
+      mainPage.style.display = 'block';
+  }, 1000); 
+}, 5000); 
 </script>
 
 </body>

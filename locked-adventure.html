@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flag Rush - Spartanz 2.O</title>
+    <title>Locked Adventures: The Infinity Escape - Spartanz 2.O</title>
     <link rel="icon" type="image/x-icon" href="assets/spartanz2k25logo.png" />
     <style>
         /* Reset & Base */
@@ -15,32 +15,32 @@
 
         body {
             font-family: "Arial", sans-serif;
-            background: linear-gradient(135deg, #1a0000, #4b0000);
-            color: #f0e6d2;
+            background: linear-gradient(135deg, #0a0a1a, #1a0a2e);
+            color: #e0d6f0;
             overflow-x: hidden;
             min-height: 100vh;
             position: relative;
         }
 
-        /* Iron Man Theme Elements */
-        .cyber-accent {
-            color: #FFD700 !important;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        /* Thanos Theme Elements */
+        .thanos-accent {
+            color: #8a2be2 !important;
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.7);
         }
 
-        .cyber-glow {
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+        .thanos-glow {
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.6);
         }
 
         /* Header Styling */
         .header {
-            background: rgba(30, 0, 0, 0.8);
+            background: rgba(10, 5, 20, 0.85);
             backdrop-filter: blur(10px);
             padding: 1.5rem;
             display: flex;
             align-items: center;
             gap: 1.5rem;
-            border-bottom: 2px solid #FFD700;
+            border-bottom: 2px solid #8a2be2;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -55,18 +55,18 @@
         .spartanz-logo {
             width: 60px;
             height: 60px;
-            background: url('https://placehold.co/60x60/FF0000/000000?text=IM') center/contain no-repeat;
+            background: url('https://placehold.co/60x60/8a2be2/000000?text=LA') center/contain no-repeat;
             border-radius: 12px;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
         }
 
         .event-title {
             font-size: 2.2rem;
             font-weight: bold;
-            background: linear-gradient(to right, #FFD700, #FF4500);
+            background: linear-gradient(to right, #8a2be2, #4b0082);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            text-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
         }
 
         /* Main Content */
@@ -77,8 +77,8 @@
         }
 
         .section {
-            background: rgba(40, 0, 0, 0.75);
-            border: 1px solid rgba(255, 215, 0, 0.3);
+            background: rgba(15, 5, 30, 0.8);
+            border: 1px solid rgba(138, 43, 226, 0.3);
             border-radius: 15px;
             padding: 2.5rem;
             margin-bottom: 2.5rem;
@@ -94,14 +94,14 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, transparent, #FFD700, transparent);
+            background: linear-gradient(90deg, transparent, #8a2be2, transparent);
         }
 
         .section-title {
             font-size: 2rem;
             margin-bottom: 1.5rem;
-            color: #FFD700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+            color: #8a2be2;
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.6);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -111,7 +111,7 @@
             content: '';
             flex: 1;
             height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.5), transparent);
+            background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.5), transparent);
         }
 
         /* Rules List */
@@ -134,20 +134,20 @@
         .rule-icon {
             min-width: 30px;
             height: 30px;
-            background: rgba(255, 0, 0, 0.3);
+            background: rgba(138, 43, 226, 0.3);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            color: #FFD700;
+            color: #8a2be2;
             flex-shrink: 0;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.6);
         }
 
         .rule-content h4 {
             margin-bottom: 0.5rem;
-            color: #FFD700;
+            color: #8a2be2;
         }
 
         /* Event Logo Visual */
@@ -172,34 +172,34 @@
         .event-logo {
             width: 150px;
             height: 150px;
-            background: url('assets/FlagRush.png') center/contain no-repeat;
+            background: url('assets/Locked Adventure Logo.jpg') center/contain no-repeat;
             border-radius: 20px;
-            box-shadow: 0 0 30px #FF0000, 0 0 60px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 30px #8a2be2, 0 0 60px rgba(138, 43, 226, 0.5);
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 30px #FF0000, 0 0 60px rgba(255, 0, 0, 0.5); }
-            50% { box-shadow: 0 0 40px #FFD700, 0 0 80px rgba(255, 215, 0, 0.6); }
-            100% { box-shadow: 0 0 30px #FF0000, 0 0 60px rgba(255, 0, 0, 0.5); }
+            0% { box-shadow: 0 0 30px #8a2be2, 0 0 60px rgba(138, 43, 226, 0.5); }
+            50% { box-shadow: 0 0 40px #9370db, 0 0 80px rgba(147, 112, 219, 0.6); }
+            100% { box-shadow: 0 0 30px #8a2be2, 0 0 60px rgba(138, 43, 226, 0.5); }
         }
 
         /* Register Button */
         .register-button {
             display: inline-block;
-            background: linear-gradient(135deg, #FF0000, #8B0000);
-            color: #FFD700;
+            background: linear-gradient(135deg, #4b0082, #1a0a2e);
+            color: #8a2be2;
             padding: 1.2rem 2.5rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
             font-size: 1.3rem;
             margin: 2rem 0;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            border: 2px solid #FFD700;
+            border: 2px solid #8a2be2;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
@@ -211,14 +211,14 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
+            background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.4), transparent);
             transition: 0.5s;
         }
 
         .register-button:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.6);
-            background: linear-gradient(135deg, #FF4500, #B22222);
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.8), 0 0 30px rgba(147, 112, 219, 0.6);
+            background: linear-gradient(135deg, #6a0dad, #2e0a4d);
         }
 
         .register-button:hover::before {
@@ -227,28 +227,28 @@
 
         .register-button:active {
             transform: translateY(0) scale(0.98);
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.6);
         }
 
         /* Back to Events Button */
         .back-button {
             display: inline-block;
-            background: linear-gradient(135deg, #FFD700, #FF4500);
-            color: #000;
+            background: linear-gradient(135deg, #8a2be2, #4b0082);
+            color: #fff;
             padding: 0.8rem 1.8rem;
             border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
             margin-top: 1.5rem;
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
             transition: all 0.3s ease;
-            border: 2px solid #FFD700;
+            border: 2px solid #8a2be2;
         }
 
         .back-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
-            background: linear-gradient(135deg, #FFB300, #FF0000);
+            box-shadow: 0 6px 20px rgba(147, 112, 219, 0.6);
+            background: linear-gradient(135deg, #9370db, #6a0dad);
         }
 
         /* Button Container */
@@ -293,7 +293,7 @@
             .spartanz-logo {
                 width: 50px;
                 height: 50px;
-                background: url('https://placehold.co/50x50/FF0000/000000?text=IM') center/contain no-repeat;
+                background: url('https://placehold.co/50x50/8a2be2/000000?text=LA') center/contain no-repeat;
             }
             
             .register-button {
@@ -338,7 +338,7 @@
             .spartanz-logo {
                 width: 40px;
                 height: 40px;
-                background: url('https://placehold.co/40x40/FF0000/000000?text=IM') center/contain no-repeat;
+                background: url('https://placehold.co/40x40/8a2be2/000000?text=LA') center/contain no-repeat;
             }
             
             .register-button {
@@ -352,9 +352,26 @@
             text-align: center;
             padding: 2rem;
             margin-top: 3rem;
-            border-top: 1px solid rgba(255, 215, 0, 0.3);
+            border-top: 1px solid rgba(138, 43, 226, 0.3);
             color: #ccc;
             font-size: 0.9rem;
+        }
+
+        /* Infinity Stone Colors */
+        .power-stone { color: #ff6b6b; }
+        .time-stone { color: #4ecdc4; }
+        .space-stone { color: #45b7d1; }
+        .mind-stone { color: #ffd166; }
+        .reality-stone { color: #ef476f; }
+        .soul-stone { color: #9b5de5; }
+        
+        .quote {
+            font-style: italic;
+            padding: 1.5rem;
+            border-left: 3px solid #8a2be2;
+            margin: 1.5rem 0;
+            background: rgba(26, 10, 46, 0.3);
+            border-radius: 0 10px 10px 0;
         }
     </style>
 </head>
@@ -363,7 +380,7 @@
     <header class="header">
         <div class="logo-container">
             <div class="spartanz-logo"></div>
-            <h1 class="event-title">Locked Adventure</h1>
+            <h1 class="event-title">Locked Adventures: The Infinity Escape</h1>
         </div>
     </header>
 
@@ -376,8 +393,8 @@
         </div>
 
         <div class="section">
-            <h2 class="section-title">Event Description</h2>
-            <p>A high-paced cybersecurity capture-the-flag challenge where you'll hunt for flags, exploit vulnerabilities, and outsmart your opponents. Test your hacking skills in this intense competition!</p>
+            <h2 class="section-title">Game Overview</h2>
+            <p>You are an Avenger on a top-secret mission guided by Nick Fury himself. Your task is to collect all six Infinity Stones hidden across four challenging rooms before Thanos arrives. Each room is packed with riddles, codes, and traps — and only the sharpest heroes can survive.</p>
         </div>
 
         <div class="section">
@@ -386,79 +403,129 @@
                 <li>
                     <div class="rule-icon">1</div>
                     <div class="rule-content">
-                        <h4>Team Size</h4>
-                        <p>1-2 participants per team</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">2</div>
-                    <div class="rule-content">
-                        <h4>Equipment</h4>
-                        <p>Participants must bring their own laptops with necessary tools installed</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">3</div>
-                    <div class="rule-content">
-                        <h4>Challenge Format</h4>
-                        <p>40 challenges of varying difficulty levels</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title">Scoring System</h2>
-            <ul class="rules-list">
-                <li>
-                    <div class="rule-icon">S</div>
-                    <div class="rule-content">
-                        <h4>Points Allocation</h4>
-                        <p>Points awarded based on challenge difficulty - harder challenges yield more points</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">W</div>
-                    <div class="rule-content">
-                        <h4>Winners</h4>
-                        <p>Top 3 teams with the highest points at the end of the event will be declared winners</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title cyber-accent">Competition Rules</h2>
-            <ul class="rules-list">
-                <li>
-                    <div class="rule-icon">⚠️</div>
-                    <div class="rule-content">
-                        <h4>Strict Prohibition</h4>
-                        <p>Collaboration between teams and external help is strictly prohibited</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">🚫</div>
-                    <div class="rule-content">
-                        <h4>Disqualification</h4>
-                        <p>Any form of misconduct or cheating will result in immediate disqualification</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">🔒</div>
-                    <div class="rule-content">
-                        <h4>Security</h4>
-                        <p>All attacks must be confined to the designated competition environment</p>
+                        <h4>Team Formation</h4>
+                        <p>This mission allows a maximum of 2 players — your partner is your greatest strength. Communication, focus, and teamwork are the keys to survival.</p>
                     </div>
                 </li>
                 <li>
                     <div class="rule-icon">⏱️</div>
                     <div class="rule-content">
                         <h4>Time Limit</h4>
-                        <p>The event will run for a fixed duration - all flags must be captured within this timeframe</p>
+                        <p>Each room must be completed within 10 minutes. If time runs out, Thanos draws closer, and you'll have to restart that room.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">🔍</div>
+                    <div class="rule-content">
+                        <h4>Nick Fury's Guidance</h4>
+                        <p>Nick Fury is your virtual guide and mentor. You'll receive 2 hints per room — use them wisely. Once both hints are used, no further help will be given.</p>
                     </div>
                 </li>
             </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Rooms & Stones</h2>
+            <ul class="rules-list">
+                <li>
+                    <div class="rule-icon">1</div>
+                    <div class="rule-content">
+                        <h4>Room 1: Power Stone</h4>
+                        <p>Capture 1 Stone – The <span class="power-stone">Power Stone</span>.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">2</div>
+                    <div class="rule-content">
+                        <h4>Room 2: Time & Space Stones</h4>
+                        <p>Collect 2 Stones – The <span class="time-stone">Time Stone</span> and <span class="space-stone">Space Stone</span>.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">3</div>
+                    <div class="rule-content">
+                        <h4>Room 3: Mind, Reality & Soul Stones</h4>
+                        <p>Secure 3 Stones – The <span class="mind-stone">Mind Stone</span>, <span class="reality-stone">Reality Stone</span>, and <span class="soul-stone">Soul Stone</span>.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">4</div>
+                    <div class="rule-content">
+                        <h4>Room 4: Infinity Gauntlet Chamber</h4>
+                        <p>Enter the Infinity Gauntlet Chamber, packed with riddles and traps. Solve every challenge to unlock the Gauntlet and claim ultimate power.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title thanos-accent">Competition Rules</h2>
+            <ul class="rules-list">
+                <li>
+                    <div class="rule-icon">🧩</div>
+                    <div class="rule-content">
+                        <h4>Puzzle Rules</h4>
+                        <p>Each puzzle, lock, and code is a step toward the next stone. Logic, patience, and teamwork are your best weapons.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">⚠️</div>
+                    <div class="rule-content">
+                        <h4>Penalties</h4>
+                        <p>Every wrong answer or misuse of a hint costs 30 seconds from your timer. Stay calm. Think smart. Time is your true enemy.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">🏆</div>
+                    <div class="rule-content">
+                        <h4>Winning the Game</h4>
+                        <p>After securing all six stones and unlocking the Infinity Gauntlet in Room 4, you must assemble them all before Thanos arrives. Victory saves the universe — failure means its fall.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">💀</div>
+                    <div class="rule-content">
+                        <h4>Failure Condition</h4>
+                        <p>If Thanos reaches the Gauntlet before you do, your mission resets, and you must begin again from the first room.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Important Notes</h2>
+            <ul class="rules-list">
+                <li>
+                    <div class="rule-icon">🚫</div>
+                    <div class="rule-content">
+                        <h4>No External Help</h4>
+                        <p>No external help or internet searches allowed.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">🤝</div>
+                    <div class="rule-content">
+                        <h4>Teamwork</h4>
+                        <p>Teamwork and focus are the heart of success.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">💪</div>
+                    <div class="rule-content">
+                        <h4>Perseverance</h4>
+                        <p>Remember: heroes never quit, even when time runs out.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Final Message from Nick Fury</h2>
+            <div class="quote">
+                "The fate of the universe rests not in power, but in unity.<br>
+                Two heroes. One mission. Endless courage.<br>
+                Now go — and prove that even locked doors can't stop Avengers."
+            </div>
         </div>
 
         <div class="button-container">
@@ -472,6 +539,9 @@
         </div>
     </div>
 
+    <div class="footer">
+        <p>Locked Adventures: The Infinity Escape • Spartanz 2.O • October 2025</p>
+    </div>
 
     <script>
         // Add subtle animation to rule icons on scroll

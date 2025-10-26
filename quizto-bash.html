@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flag Rush - Spartanz 2.O</title>
+    <title>Quizto Bash - Spartanz 2.O</title>
     <link rel="icon" type="image/x-icon" href="assets/spartanz2k25logo.png" />
     <style>
         /* Reset & Base */
@@ -15,32 +15,32 @@
 
         body {
             font-family: "Arial", sans-serif;
-            background: linear-gradient(135deg, #1a0000, #4b0000);
-            color: #f0e6d2;
+            background: linear-gradient(135deg, #0d1b2a, #1b3a5f);
+            color: #e0f7fa;
             overflow-x: hidden;
             min-height: 100vh;
             position: relative;
         }
 
-        /* Iron Man Theme Elements */
+        /* Thor Theme Elements */
         .cyber-accent {
-            color: #FFD700 !important;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+            color: #4fc3f7 !important;
+            text-shadow: 0 0 10px rgba(79, 195, 247, 0.7);
         }
 
         .cyber-glow {
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 15px rgba(79, 195, 247, 0.6);
         }
 
         /* Header Styling */
         .header {
-            background: rgba(30, 0, 0, 0.8);
+            background: rgba(10, 20, 35, 0.85);
             backdrop-filter: blur(10px);
             padding: 1.5rem;
             display: flex;
             align-items: center;
             gap: 1.5rem;
-            border-bottom: 2px solid #FFD700;
+            border-bottom: 2px solid #4fc3f7;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -55,18 +55,18 @@
         .spartanz-logo {
             width: 60px;
             height: 60px;
-            background: url('https://placehold.co/60x60/FF0000/000000?text=IM') center/contain no-repeat;
+            background: url('https://placehold.co/60x60/4fc3f7/000000?text=TB') center/contain no-repeat;
             border-radius: 12px;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+            box-shadow: 0 0 15px rgba(79, 195, 247, 0.7);
         }
 
         .event-title {
             font-size: 2.2rem;
             font-weight: bold;
-            background: linear-gradient(to right, #FFD700, #FF4500);
+            background: linear-gradient(to right, #4fc3f7, #29b6f6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            text-shadow: 0 0 15px rgba(79, 195, 247, 0.5);
         }
 
         /* Main Content */
@@ -77,8 +77,8 @@
         }
 
         .section {
-            background: rgba(40, 0, 0, 0.75);
-            border: 1px solid rgba(255, 215, 0, 0.3);
+            background: rgba(15, 30, 50, 0.8);
+            border: 1px solid rgba(79, 195, 247, 0.3);
             border-radius: 15px;
             padding: 2.5rem;
             margin-bottom: 2.5rem;
@@ -94,14 +94,14 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, transparent, #FFD700, transparent);
+            background: linear-gradient(90deg, transparent, #4fc3f7, transparent);
         }
 
         .section-title {
             font-size: 2rem;
             margin-bottom: 1.5rem;
-            color: #FFD700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+            color: #4fc3f7;
+            text-shadow: 0 0 10px rgba(79, 195, 247, 0.6);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -111,7 +111,7 @@
             content: '';
             flex: 1;
             height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.5), transparent);
+            background: linear-gradient(90deg, transparent, rgba(79, 195, 247, 0.5), transparent);
         }
 
         /* Rules List */
@@ -134,20 +134,20 @@
         .rule-icon {
             min-width: 30px;
             height: 30px;
-            background: rgba(255, 0, 0, 0.3);
+            background: rgba(79, 195, 247, 0.3);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            color: #FFD700;
+            color: #4fc3f7;
             flex-shrink: 0;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 10px rgba(79, 195, 247, 0.6);
         }
 
         .rule-content h4 {
             margin-bottom: 0.5rem;
-            color: #FFD700;
+            color: #4fc3f7;
         }
 
         /* Event Logo Visual */
@@ -172,34 +172,34 @@
         .event-logo {
             width: 150px;
             height: 150px;
-            background: url('assets/FlagRush.png') center/contain no-repeat;
+            background: url('assets/Quizto-Bash logo.jpg') center/contain no-repeat;
             border-radius: 20px;
-            box-shadow: 0 0 30px #FF0000, 0 0 60px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 30px #4fc3f7, 0 0 60px rgba(79, 195, 247, 0.5);
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 30px #FF0000, 0 0 60px rgba(255, 0, 0, 0.5); }
-            50% { box-shadow: 0 0 40px #FFD700, 0 0 80px rgba(255, 215, 0, 0.6); }
-            100% { box-shadow: 0 0 30px #FF0000, 0 0 60px rgba(255, 0, 0, 0.5); }
+            0% { box-shadow: 0 0 30px #4fc3f7, 0 0 60px rgba(79, 195, 247, 0.5); }
+            50% { box-shadow: 0 0 40px #81d4fa, 0 0 80px rgba(129, 212, 250, 0.6); }
+            100% { box-shadow: 0 0 30px #4fc3f7, 0 0 60px rgba(79, 195, 247, 0.5); }
         }
 
         /* Register Button */
         .register-button {
             display: inline-block;
-            background: linear-gradient(135deg, #FF0000, #8B0000);
-            color: #FFD700;
+            background: linear-gradient(135deg, #0288d1, #01579b);
+            color: #4fc3f7;
             padding: 1.2rem 2.5rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
             font-size: 1.3rem;
             margin: 2rem 0;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 20px rgba(79, 195, 247, 0.6);
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            border: 2px solid #FFD700;
+            border: 2px solid #4fc3f7;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
@@ -211,14 +211,14 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
+            background: linear-gradient(90deg, transparent, rgba(79, 195, 247, 0.4), transparent);
             transition: 0.5s;
         }
 
         .register-button:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.6);
-            background: linear-gradient(135deg, #FF4500, #B22222);
+            box-shadow: 0 10px 25px rgba(79, 195, 247, 0.8), 0 0 30px rgba(129, 212, 250, 0.6);
+            background: linear-gradient(135deg, #29b6f6, #0277bd);
         }
 
         .register-button:hover::before {
@@ -227,28 +227,28 @@
 
         .register-button:active {
             transform: translateY(0) scale(0.98);
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 15px rgba(79, 195, 247, 0.6);
         }
 
         /* Back to Events Button */
         .back-button {
             display: inline-block;
-            background: linear-gradient(135deg, #FFD700, #FF4500);
+            background: linear-gradient(135deg, #4fc3f7, #29b6f6);
             color: #000;
             padding: 0.8rem 1.8rem;
             border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
             margin-top: 1.5rem;
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+            box-shadow: 0 4px 15px rgba(79, 195, 247, 0.4);
             transition: all 0.3s ease;
-            border: 2px solid #FFD700;
+            border: 2px solid #4fc3f7;
         }
 
         .back-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
-            background: linear-gradient(135deg, #FFB300, #FF0000);
+            box-shadow: 0 6px 20px rgba(129, 212, 250, 0.6);
+            background: linear-gradient(135deg, #81d4fa, #0288d1);
         }
 
         /* Button Container */
@@ -293,7 +293,7 @@
             .spartanz-logo {
                 width: 50px;
                 height: 50px;
-                background: url('https://placehold.co/50x50/FF0000/000000?text=IM') center/contain no-repeat;
+                background: url('https://placehold.co/50x50/4fc3f7/000000?text=TB') center/contain no-repeat;
             }
             
             .register-button {
@@ -338,7 +338,7 @@
             .spartanz-logo {
                 width: 40px;
                 height: 40px;
-                background: url('https://placehold.co/40x40/FF0000/000000?text=IM') center/contain no-repeat;
+                background: url('https://placehold.co/40x40/4fc3f7/000000?text=TB') center/contain no-repeat;
             }
             
             .register-button {
@@ -352,7 +352,7 @@
             text-align: center;
             padding: 2rem;
             margin-top: 3rem;
-            border-top: 1px solid rgba(255, 215, 0, 0.3);
+            border-top: 1px solid rgba(79, 195, 247, 0.3);
             color: #ccc;
             font-size: 0.9rem;
         }
@@ -377,85 +377,113 @@
 
         <div class="section">
             <h2 class="section-title">Event Description</h2>
-            <p>A high-paced cybersecurity capture-the-flag challenge where you'll hunt for flags, exploit vulnerabilities, and outsmart your opponents. Test your hacking skills in this intense competition!</p>
+            <p>Quizto Bash is a two-round battle of wits and creativity! Round 1 tests your knowledge in a thrilling team quiz, while Round 2 challenges your design skills to craft innovative UI prototypes. Are you ready to prove your mettle?</p>
         </div>
 
         <div class="section">
-            <h2 class="section-title">Team Requirements</h2>
+            <h2 class="section-title">Round 1: INNOQUIZ</h2>
             <ul class="rules-list">
                 <li>
                     <div class="rule-icon">1</div>
                     <div class="rule-content">
                         <h4>Team Size</h4>
-                        <p>1-2 participants per team</p>
+                        <p>Each team must consist of 2 members.</p>
                     </div>
                 </li>
                 <li>
                     <div class="rule-icon">2</div>
                     <div class="rule-content">
-                        <h4>Equipment</h4>
-                        <p>Participants must bring their own laptops with necessary tools installed</p>
+                        <h4>Punctuality</h4>
+                        <p>Teams must report 10 minutes prior to the event start time.</p>
                     </div>
                 </li>
                 <li>
                     <div class="rule-icon">3</div>
                     <div class="rule-content">
-                        <h4>Challenge Format</h4>
-                        <p>40 challenges of varying difficulty levels</p>
+                        <h4>Tie-Breaker</h4>
+                        <p>In case of a tie, buzzer or tie-breaker questions will decide the winners.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">4</div>
+                    <div class="rule-content">
+                        <h4>Final Decision</h4>
+                        <p>The decision of the Quiz Masters and Judges is final and binding.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">5</div>
+                    <div class="rule-content">
+                        <h4>Malpractice</h4>
+                        <p>Any form of malpractice or misconduct will result in immediate disqualification.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">6</div>
+                    <div class="rule-content">
+                        <h4>Organizer Rights</h4>
+                        <p>Organizers reserve the right to modify the rules or structure if required.</p>
                     </div>
                 </li>
             </ul>
         </div>
 
         <div class="section">
-            <h2 class="section-title">Scoring System</h2>
+            <h2 class="section-title">Round 2: UINOVA</h2>
             <ul class="rules-list">
                 <li>
-                    <div class="rule-icon">S</div>
+                    <div class="rule-icon">✔</div>
                     <div class="rule-content">
-                        <h4>Points Allocation</h4>
-                        <p>Points awarded based on challenge difficulty - harder challenges yield more points</p>
+                        <h4>Team Size</h4>
+                        <p>1-2 members</p>
                     </div>
                 </li>
                 <li>
-                    <div class="rule-icon">W</div>
+                    <div class="rule-icon">✔</div>
                     <div class="rule-content">
-                        <h4>Winners</h4>
-                        <p>Top 3 teams with the highest points at the end of the event will be declared winners</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title cyber-accent">Competition Rules</h2>
-            <ul class="rules-list">
-                <li>
-                    <div class="rule-icon">⚠️</div>
-                    <div class="rule-content">
-                        <h4>Strict Prohibition</h4>
-                        <p>Collaboration between teams and external help is strictly prohibited</p>
+                        <h4>Design Format</h4>
+                        <p>Figma (Must submit a prototype)</p>
                     </div>
                 </li>
                 <li>
-                    <div class="rule-icon">🚫</div>
+                    <div class="rule-icon">✔</div>
+                    <div class="rule-content">
+                        <h4>Presentation</h4>
+                        <p>Must include UI design and usability considerations</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">✔</div>
+                    <div class="rule-content">
+                        <h4>Originality</h4>
+                        <p>No templates or pre-made UI kits allowed—design must be original</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rule-icon">✔</div>
                     <div class="rule-content">
                         <h4>Disqualification</h4>
-                        <p>Any form of misconduct or cheating will result in immediate disqualification</p>
+                        <p>Plagiarism, exceeding time limit, or inappropriate content</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title cyber-accent">General Rules</h2>
+            <ul class="rules-list">
+                <li>
+                    <div class="rule-icon">⚡</div>
+                    <div class="rule-content">
+                        <h4>Eligibility</h4>
+                        <p>Open to all students (any year)</p>
                     </div>
                 </li>
                 <li>
-                    <div class="rule-icon">🔒</div>
+                    <div class="rule-icon">🛡️</div>
                     <div class="rule-content">
-                        <h4>Security</h4>
-                        <p>All attacks must be confined to the designated competition environment</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">⏱️</div>
-                    <div class="rule-content">
-                        <h4>Time Limit</h4>
-                        <p>The event will run for a fixed duration - all flags must be captured within this timeframe</p>
+                        <h4>Fair Play</h4>
+                        <p>All participants must adhere to the spirit of fair competition</p>
                     </div>
                 </li>
             </ul>
@@ -472,6 +500,9 @@
         </div>
     </div>
 
+    <div class="footer">
+        <p>Quizto Bash • Spartanz 2.O • October 2025</p>
+    </div>
 
     <script>
         // Add subtle animation to rule icons on scroll

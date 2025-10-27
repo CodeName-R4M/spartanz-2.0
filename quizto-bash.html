@@ -1,527 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quizto Bash - Spartanz 2.O</title>
-    <link rel="icon" type="image/x-icon" href="assets/spartanz2k25logo.png" />
-    <style>
-        /* Reset & Base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>QUIZTO-BASH | SPARTANZ 2.O — THE ULTIMATE CHALLENGE</title>
 
-        body {
-            font-family: "Arial", sans-serif;
-            background: linear-gradient(135deg, #0d1b2a, #1b3a5f);
-            color: #e0f7fa;
-            overflow-x: hidden;
-            min-height: 100vh;
-            position: relative;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
-        /* Thor Theme Elements */
-        .cyber-accent {
-            color: #4fc3f7 !important;
-            text-shadow: 0 0 10px rgba(79, 195, 247, 0.7);
-        }
+<style>
+/* ===================== Global & Base Styling ===================== */
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #0f1a2a, #04080f);
+  color: #e0f7fa; /* Light cyan */
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  overflow-x: hidden;
+  position: relative;
+}
 
-        .cyber-glow {
-            box-shadow: 0 0 15px rgba(79, 195, 247, 0.6);
-        }
+/* Futuristic Scanline Overlay */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        transparent 0,
+        rgba(0, 255, 255, 0.05) 1px,
+        transparent 2px
+    );
+    z-index: 999; /* Above question marks, below content */
+    opacity: 0.5;
+}
 
-        /* Header Styling */
-        .header {
-            background: rgba(10, 20, 35, 0.85);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            border-bottom: 2px solid #4fc3f7;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+/* Headings in ALL CAPS */
+h1, h2, h3 {
+    text-transform: uppercase;
+}
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+/* ===================== Keyframes ===================== */
+@keyframes brainPulse {
+    0% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 0; transform: scale(1.5); }
+}
 
-        .spartanz-logo {
-            width: 60px;
-            height: 60px;
-            background: url('https://placehold.co/60x60/4fc3f7/000000?text=TB') center/contain no-repeat;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(79, 195, 247, 0.7);
-        }
+@keyframes explosion {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+}
 
-        .event-title {
-            font-size: 2.2rem;
-            font-weight: bold;
-            background: linear-gradient(to right, #4fc3f7, #29b6f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 15px rgba(79, 195, 247, 0.5);
-        }
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
 
-        /* Main Content */
-        .container {
-            max-width: 1000px;
-            margin: 3rem auto;
-            padding: 0 1.5rem;
-        }
+@keyframes fadeOutOverlay {
+  0% { opacity: 1; }
+  100% { opacity: 0; pointer-events: none; }
+}
 
-        .section {
-            background: rgba(15, 30, 50, 0.8);
-            border: 1px solid rgba(79, 195, 247, 0.3);
-            border-radius: 15px;
-            padding: 2.5rem;
-            margin-bottom: 2.5rem;
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
+@keyframes questionMarkFloat {
+  0%, 100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.7; }
+  25% { transform: translateY(-10px) scale(1.05) rotate(2deg); opacity: 0.8; }
+  50% { transform: translateY(0px) scale(1) rotate(0deg); opacity: 0.7; }
+  75% { transform: translateY(10px) scale(0.95) rotate(-2deg); opacity: 0.8; }
+}
 
-        .section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, #4fc3f7, transparent);
-        }
+@keyframes glowingBorder {
+  0% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 30px rgba(0, 255, 255, 0.4); }
+  100% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.5); }
+}
 
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #4fc3f7;
-            text-shadow: 0 0 10px rgba(79, 195, 247, 0.6);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+/* GLITCH EFFECT KEYFRAMES (The "Crazy Shit") */
+@keyframes glitch {
+  0% {
+    text-shadow: 2px 0 0 #00ffff, -2px 0 0 #ff00ff;
+    transform: translate(0, 0);
+  }
+  25% {
+    text-shadow: -2px 1px 0 #00ffff, 2px -1px 0 #ff00ff;
+    transform: translate(1px, -1px);
+  }
+  50% {
+    text-shadow: 3px -1px 0 #00ffff, -3px 1px 0 #ff00ff;
+    transform: translate(-1px, 1px);
+  }
+  75% {
+    text-shadow: -1px 2px 0 #00ffff, 1px -2px 0 #ff00ff;
+    transform: translate(2px, -2px);
+  }
+  100% {
+    text-shadow: 2px 0 0 #00ffff, -2px 0 0 #ff00ff;
+    transform: translate(0, 0);
+  }
+}
+@keyframes flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+  20%, 24%, 55% { opacity: 0.8; }
+}
 
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(79, 195, 247, 0.5), transparent);
-        }
+/* ===================== Header & Navigation ===================== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+}
 
-        /* Rules List */
-        .rules-list {
-            list-style: none;
-            padding-left: 0;
-        }
+.main-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  color: #00ffff;
+  text-shadow: 0 0 5px #00ffff, 0 0 10px rgba(0, 255, 255, 0.7);
+}
 
-        .rules-list li {
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            gap: 1rem;
-        }
+.sub-title {
+  font-size: 0.9rem;
+  color: #a7d9f7;
+}
 
-        .rules-list li:last-child {
-            border-bottom: none;
-        }
+.btn {
+  background: #00bcd4;
+  color: #000;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 700;
+  font-family: 'Share Tech Mono', monospace;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+}
+.btn:hover {
+  background: #00e6e6;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+}
 
-        .rule-icon {
-            min-width: 30px;
-            height: 30px;
-            background: rgba(79, 195, 247, 0.3);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #4fc3f7;
-            flex-shrink: 0;
-            box-shadow: 0 0 10px rgba(79, 195, 247, 0.6);
-        }
+/* ===================== Hero & Glitch Title ===================== */
+.hero {
+  margin-top: 2rem;
+  position: relative;
+  z-index: 10;
+}
+.hero h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 4rem; 
+  color: #00ffff;
+  text-shadow: 0 0 15px #00ffff, 0 0 25px rgba(0, 255, 255, 0.7);
+  animation: glitch 0.5s infinite alternate, flicker 3s infinite;
+}
+.hero p {
+  font-size: 1.4rem; 
+  color: #e0f7fa;
+  font-family: 'Share Tech Mono', monospace;
+}
 
-        .rule-content h4 {
-            margin-bottom: 0.5rem;
-            color: #4fc3f7;
-        }
+/* ===================== Content Container ===================== */
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  background: rgba(0, 0, 0, 0.8); 
+  border-radius: 20px;
+  padding: 2.5rem; 
+  border: 1px solid rgba(0, 255, 255, 0.5);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.5); 
+  animation: glowingBorder 4s infinite alternate;
+  z-index: 10;
+  position: relative;
+}
 
-        /* Event Logo Visual */
-        .logo-visual {
-            position: relative;
-            height: 300px;
-            margin: 2rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.section h2 {
+  font-family: 'Orbitron', sans-serif;
+  color: #00ffff;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.8); 
+}
 
-        .logo-container-main {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.section h3 {
+    font-family: 'Share Tech Mono', monospace;
+    color: #00ffff;
+    margin-top: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(0, 255, 255, 0.7); 
+}
 
-        .event-logo {
-            width: 150px;
-            height: 150px;
-            background: url('assets/Quizto-Bash logo.jpg') center/contain no-repeat;
-            border-radius: 20px;
-            box-shadow: 0 0 30px #4fc3f7, 0 0 60px rgba(79, 195, 247, 0.5);
-            animation: pulse 2s infinite;
-        }
+.section p, .section ul {
+  line-height: 1.8;
+  text-align: left;
+}
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 30px #4fc3f7, 0 0 60px rgba(79, 195, 247, 0.5); }
-            50% { box-shadow: 0 0 40px #81d4fa, 0 0 80px rgba(129, 212, 250, 0.6); }
-            100% { box-shadow: 0 0 30px #4fc3f7, 0 0 60px rgba(79, 195, 247, 0.5); }
-        }
+/* ===================== Footer ===================== */
+footer {
+  margin-top: 3rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: #00ffff;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.1rem;
+  border-top: 2px solid rgba(0, 255, 255, 0.3);
+}
 
-        /* Register Button */
-        .register-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #0288d1, #01579b);
-            color: #4fc3f7;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.3rem;
-            margin: 2rem 0;
-            box-shadow: 0 0 20px rgba(79, 195, 247, 0.6);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid #4fc3f7;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+/* ===================== Intro Overlay & Brain Elements ===================== */
+#introOverlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.98) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
 
-        .register-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(79, 195, 247, 0.4), transparent);
-            transition: 0.5s;
-        }
+#brain {
+    width: 80px;
+    height: 80px;
+    background-color: #00ffff;
+    border-radius: 50%;
+    position: absolute;
+    opacity: 0;
+}
 
-        .register-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(79, 195, 247, 0.8), 0 0 30px rgba(129, 212, 250, 0.6);
-            background: linear-gradient(135deg, #29b6f6, #0277bd);
-        }
+.particle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background-color: #00ffff;
+    border-radius: 50%;
+    opacity: 0;
+}
 
-        .register-button:hover::before {
-            left: 100%;
-        }
+#introOverlay h1, #introOverlay h2 {
+  margin: 0.3rem 0;
+  color: #00e6e6; 
+  font-family: 'Orbitron', sans-serif;
+  text-shadow: 0 0 10px #00e6e6, 0 0 20px #00ffff, 0 0 30px #00e6e6;
+  opacity: 0;
+  text-align: center;
+}
 
-        .register-button:active {
-            transform: translateY(0) scale(0.98);
-            box-shadow: 0 0 15px rgba(79, 195, 247, 0.6);
-        }
+#introOverlay h1 {
+  font-size: 3rem;
+}
 
-        /* Back to Events Button */
-        .back-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #4fc3f7, #29b6f6);
-            color: #000;
-            padding: 0.8rem 1.8rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 1.5rem;
-            box-shadow: 0 4px 15px rgba(79, 195, 247, 0.4);
-            transition: all 0.3s ease;
-            border: 2px solid #4fc3f7;
-        }
+#introOverlay h2 {
+  font-size: 4rem;
+}
 
-        .back-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(129, 212, 250, 0.6);
-            background: linear-gradient(135deg, #81d4fa, #0288d1);
-        }
+/* ===================== Question Mark Background Animation ===================== */
+.question-marks {
+  position: fixed; 
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1; 
+}
 
-        /* Button Container */
-        .button-container {
-            text-align: center;
-            margin-top: 2rem;
-        }
+.question-mark {
+  position: absolute;
+  font-size: 3rem; 
+  color: rgba(0, 255, 255, 0.3); 
+  opacity: 0;
+  animation: questionMarkFadeIn 2s forwards, questionMarkFloat 10s ease-in-out infinite;
+  text-shadow: 0 0 5px rgba(0, 255, 255, 0.5); 
+}
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .event-title {
-                font-size: 1.8rem;
-            }
-            
-            .section {
-                padding: 1.8rem;
-            }
-            
-            .section-title {
-                font-size: 1.7rem;
-            }
-            
-            .logo-visual {
-                height: 200px;
-            }
-            
-            .logo-container-main {
-                width: 150px;
-                height: 150px;
-            }
-            
-            .event-logo {
-                width: 120px;
-                height: 120px;
-            }
-            
-            .spartanz-logo {
-                width: 50px;
-                height: 50px;
-                background: url('https://placehold.co/50x50/4fc3f7/000000?text=TB') center/contain no-repeat;
-            }
-            
-            .register-button {
-                padding: 1rem 2rem;
-                font-size: 1.1rem;
-            }
-        }
+.question-mark:nth-child(even) { font-size: 2.5rem; animation-duration: 12s; }
+.question-mark:nth-child(odd) { font-size: 3.5rem; animation-duration: 9s; }
+.question-mark:nth-child(3n) { font-size: 4rem; animation-duration: 11s; }
 
-        @media (max-width: 480px) {
-            .event-title {
-                font-size: 1.5rem;
-            }
-            
-            .section {
-                padding: 1.5rem;
-            }
-            
-            .section-title {
-                font-size: 1.5rem;
-            }
-            
-            .rule-icon {
-                min-width: 25px;
-                height: 25px;
-                font-size: 0.9rem;
-            }
-            
-            .logo-visual {
-                height: 180px;
-            }
-            
-            .logo-container-main {
-                width: 120px;
-                height: 120px;
-            }
-            
-            .event-logo {
-                width: 100px;
-                height: 100px;
-            }
-            
-            .spartanz-logo {
-                width: 40px;
-                height: 40px;
-                background: url('https://placehold.co/40x40/4fc3f7/000000?text=TB') center/contain no-repeat;
-            }
-            
-            .register-button {
-                padding: 0.9rem 1.8rem;
-                font-size: 1rem;
-            }
-        }
 
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-            border-top: 1px solid rgba(79, 195, 247, 0.3);
-            color: #ccc;
-            font-size: 0.9rem;
-        }
-    </style>
+/* ===================== Logo & Glitch Effect ===================== */
+.logo-img {
+  display: block;
+  margin: 2.5rem auto; 
+  width: 350px; 
+  max-width: 90%;
+  border-radius: 15px; 
+  position: relative;
+  border: 3px solid #00ffff;
+  box-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ff; 
+  animation: glowingBorder 4s infinite alternate, flicker 2s infinite step-end;
+}
+.logo-img img {
+    width: 100%;
+    display: block;
+}
+/* Pseudo-elements for Glitch */
+.logo-img::before, .logo-img::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    clip: rect(0, 0, 0, 0);
+    /* Glitch effect applied via animation keyframes */
+    animation: glitch 1.5s infinite linear alternate-reverse;
+}
+.logo-img::after {
+    left: -2px;
+    text-shadow: 1px 0 #ff00ff;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch 2s infinite linear reverse;
+}
+
+/* ===================== Mobile Responsiveness (Max-width 600px) ===================== */
+@media (max-width: 600px) {
+    .header {
+        flex-direction: column;
+        padding: 1rem 1rem;
+    }
+    .nav-buttons {
+        margin-top: 0.5rem;
+    }
+    .main-title {
+        font-size: 1.5rem;
+    }
+    .sub-title {
+        font-size: 0.8rem;
+    }
+    .btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem; /* Smaller main title on mobile */
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    .container {
+        padding: 1.5rem;
+    }
+    
+    /* Scale down intro title */
+    #introOverlay h1 {
+      font-size: 2rem;
+    }
+
+    #introOverlay h2 {
+      font-size: 3rem;
+    }
+    
+    /* Reduce size of brain and particles */
+    #brain {
+        width: 60px;
+        height: 60px;
+    }
+    .particle {
+        width: 3px;
+        height: 3px;
+    }
+}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="logo-container">
-            <div class="spartanz-logo"></div>
-            <h1 class="event-title">Quizto Bash</h1>
-        </div>
-    </header>
 
-    <!-- Main Content -->
-    <div class="container">
-        <div class="logo-visual">
-            <div class="logo-container-main">
-                <div class="event-logo"></div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title">Event Description</h2>
-            <p>Quizto Bash is a two-round battle of wits and creativity! Round 1 tests your knowledge in a thrilling team quiz, while Round 2 challenges your design skills to craft innovative UI prototypes. Are you ready to prove your mettle?</p>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title">Round 1: INNOQUIZ</h2>
-            <ul class="rules-list">
-                <li>
-                    <div class="rule-icon">1</div>
-                    <div class="rule-content">
-                        <h4>Team Size</h4>
-                        <p>Each team must consist of 2 members.</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">2</div>
-                    <div class="rule-content">
-                        <h4>Punctuality</h4>
-                        <p>Teams must report 10 minutes prior to the event start time.</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">3</div>
-                    <div class="rule-content">
-                        <h4>Tie-Breaker</h4>
-                        <p>In case of a tie, buzzer or tie-breaker questions will decide the winners.</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">4</div>
-                    <div class="rule-content">
-                        <h4>Final Decision</h4>
-                        <p>The decision of the Quiz Masters and Judges is final and binding.</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">5</div>
-                    <div class="rule-content">
-                        <h4>Malpractice</h4>
-                        <p>Any form of malpractice or misconduct will result in immediate disqualification.</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">6</div>
-                    <div class="rule-content">
-                        <h4>Organizer Rights</h4>
-                        <p>Organizers reserve the right to modify the rules or structure if required.</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title">Round 2: UINOVA</h2>
-            <ul class="rules-list">
-                <li>
-                    <div class="rule-icon">✔</div>
-                    <div class="rule-content">
-                        <h4>Team Size</h4>
-                        <p>1-2 members</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">✔</div>
-                    <div class="rule-content">
-                        <h4>Design Format</h4>
-                        <p>Figma (Must submit a prototype)</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">✔</div>
-                    <div class="rule-content">
-                        <h4>Presentation</h4>
-                        <p>Must include UI design and usability considerations</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">✔</div>
-                    <div class="rule-content">
-                        <h4>Originality</h4>
-                        <p>No templates or pre-made UI kits allowed—design must be original</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">✔</div>
-                    <div class="rule-content">
-                        <h4>Disqualification</h4>
-                        <p>Plagiarism, exceeding time limit, or inappropriate content</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title cyber-accent">General Rules</h2>
-            <ul class="rules-list">
-                <li>
-                    <div class="rule-icon">⚡</div>
-                    <div class="rule-content">
-                        <h4>Eligibility</h4>
-                        <p>Open to all students (any year)</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="rule-icon">🛡️</div>
-                    <div class="rule-content">
-                        <h4>Fair Play</h4>
-                        <p>All participants must adhere to the spirit of fair competition</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <div class="button-container">
-            <a href="https://forms.gle/nkgSMrwhYXFTXVuZ7" class="register-button" target="_blank">
-                Register Now
-            </a>
-        </div>
-
-        <div style="text-align: center;">
-            <a href="/" class="back-button">BACK TO EVENTS</a>
-        </div>
+<div id="introOverlay">
+    <div id="brain"></div>
     </div>
 
-    <div class="footer">
-        <p>Quizto Bash • Spartanz 2.O • October 2025</p>
+<div class="question-marks" id="questionMarks"></div>
+
+<header class="header">
+  <div class="header-left">
+    <div class="main-title">SPARTANZ 2.0</div>
+    <div class="sub-title">DEPARTMENT OF COMPUTER SCIENCE ENGINEERING (CYBER SECURITY)</div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn" onclick="window.history.back()">⬅ BACK</button>
+    <button class="btn" onclick="alert('REGISTRATION FOR QUIZTO-BASH IS NOW OPEN!')">REGISTER</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>QUIZTO-BASH</h1>
+  <p>TEST YOUR KNOWLEDGE, CHALLENGE YOUR MIND, CONQUER THE QUIZ! 🧠</p>
+</section>
+
+<main class="container">
+  <section class="section">
+    <h2>💡 HOW TO PLAY & GENERAL RULES</h2>
+
+    <div class="logo-img">
+        <img src="assets/Quizto-Bash logo.jpg" alt="QUIZTO-BASH LOGO" />
     </div>
 
-    <script>
-        // Add subtle animation to rule icons on scroll
-        document.addEventListener('DOMContentLoaded', function() {
-            const ruleIcons = document.querySelectorAll('.rule-icon');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.transform = 'scale(1.1)';
-                        entry.target.style.transition = 'transform 0.3s ease';
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            ruleIcons.forEach(icon => {
-                observer.observe(icon);
-            });
-        });
-    </script>
+
+    <p><strong>🎯 OBJECTIVE:</strong> ENGAGE IN A THRILLING QUIZ COMPETITION ACROSS VARIOUS DOMAINS, SHOWCASING YOUR INTELLECT AND QUICK THINKING TO WIN ULTIMATE BRAGGING RIGHTS.</p>
+    
+    <h3>1. ROUND 1: GENERAL QUIZ RULES</h3>
+    <ul>
+      <li><strong>TEAM UP:</strong> PARTICIPANTS WILL FORM TEAMS OF <strong>2-3 MEMBERS</strong>.</li>
+      <li><strong>FAIR PLAY:</strong> ALL ANSWERS MUST BE ORIGINAL AND BASED ON TEAM KNOWLEDGE.</li>
+      <li><strong>NO CHEATING:</strong> USE OF MOBILE PHONES, SMART DEVICES, OR EXTERNAL RESOURCES IS *STRICTLY PROHIBITED* DURING QUIZ ROUNDS. VIOLATION WILL LEAD TO IMMEDIATE DISQUALIFICATION.</li>
+      <li><strong>HOST'S DECISION:</strong> THE QUIZMASTER'S DECISION ON ALL QUESTIONS, ANSWERS, AND DISPUTES WILL BE *FINAL AND BINDING*.</li>
+      <li><strong>CLARITY IS CRUCIAL:</strong> ANSWERS MUST BE CLEAR AND AUDIBLE. AMBIGUOUS ANSWERS MAY NOT BE ACCEPTED.</li>
+      <li><strong>POINTS SYSTEM:</strong> POINTS WILL BE AWARDED FOR CORRECT ANSWERS AND MAY BE DEDUCTED FOR INCORRECT OR LATE RESPONSES IN CERTAIN ROUNDS.</li>
+    </ul>
+
+    <h3>2. ROUND 2: UINOVA (UI/UX DESIGN CHALLENGE) RULES</h3>
+    <ul>
+      <li><strong>TEAM SIZE:</strong> <strong>1-2 MEMBERS</strong> PER TEAM.</li>
+      <li><strong>DESIGN FORMAT:</strong> SUBMISSIONS MUST BE CREATED USING *FIGMA* AND A WORKING *PROTOTYPE* LINK IS MANDATORY.</li>
+      <li><strong>PRESENTATION REQUIREMENT:</strong> PRESENTATION MUST CLEARLY ARTICULATE THE *UI DESIGN CHOICES, **UX RATIONALE, AND **USABILITY CONSIDERATIONS*.</li>
+      <li><strong>ORIGINALITY:</strong> DESIGNS MUST BE *100% ORIGINAL*. NO TEMPLATES, PRE-MADE UI KITS, OR DIRECT COPYING OF EXISTING DESIGNS ARE ALLOWED.</li>
+      <li><strong>DISQUALIFICATION:</strong> TEAMS WILL BE DISQUALIFIED FOR *PLAGIARISM, **EXCEEDING THE GIVEN TIME LIMIT, OR SUBMITTING **INAPPROPRIATE CONTENT*.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>🗓 EVENT SCHEDULE</h2>
+    <p><strong>TOTAL DURATION:</strong> APPROXIMATELY 60-90 MINUTES</p>
+    <p><strong>NUMBER OF ROUNDS:</strong> 2 CORE ROUNDS + POTENTIAL TIE-BREAKER</p>
+    <p><strong>PER ROUND:</strong> VARIES DEPENDING ON COMPLEXITY (APPROX. 10-40 MINUTES PER ROUND).</p>
+  </section>
+</main>
+
+<footer>© 2025 SPARTANZ 2.O | QUIZTO-BASH — THINK. CHALLENGE. TRIUMPH. 🧠</footer>
+
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2023/04/16/audio_f5589419b4.mp3?filename=cyborg-sound-144703.mp3" type="audio/mp3">
+</audio>
+
+<script>
+const questionMarksContainer = document.getElementById('questionMarks');
+function createQuestionMarks(count = 30) {
+  for (let i = 0; i < count; i++) {
+    const qMark = document.createElement('div');
+    qMark.classList.add('question-mark');
+    qMark.textContent = '?';
+    qMark.style.left = Math.random() * 100 + '%';
+    qMark.style.top = Math.random() * 100 + '%';
+    qMark.style.animationDuration = (8 + Math.random() * 7) + 's';
+    qMark.style.animationDelay = (Math.random() * -10) + 's';
+    questionMarksContainer.appendChild(qMark);
+  }
+}
+createQuestionMarks(30);
+
+// Dynamic, high-energy brain explosion intro animation
+const introOverlay = document.getElementById('introOverlay');
+const brain = document.getElementById('brain');
+
+// 1. Brain appears and pulses
+brain.style.animation = "brainPulse 1s ease-in-out 0.5s forwards";
+
+// 2. Explosion and particle creation
+setTimeout(() => {
+    brain.remove(); // Remove brain element
+    
+    // Create and animate particles
+    const particleCount = 20;
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        introOverlay.appendChild(particle);
+
+        // Random coordinates for explosion direction
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = 300 + Math.random() * 200; 
+        const x = Math.cos(angle) * distance;
+        const y = Math.sin(angle) * distance;
+
+        particle.style.setProperty('--x', x + 'px');
+        particle.style.setProperty('--y', y + 'px');
+        
+        particle.style.animation = "explosion 1s ease-out forwards";
+        particle.style.animationDelay = '0s'; // Start immediately after brain removal
+        
+        // Position particles initially at the center
+        particle.style.left = '50%';
+        particle.style.top = '50%';
+        particle.style.transform = 'translate(-50%, -50%)';
+        particle.style.opacity = '1';
+    }
+}, 1600); // Start explosion after 1.6s (when pulse ends)
+
+
+// 3. Titles appear after explosion
+setTimeout(() => {
+    // Add titles dynamically
+    const h1 = document.createElement('h1');
+    h1.textContent = 'SPARTANZ 2.0 PRESENTS'; // Corrected to ALL CAPS
+    introOverlay.appendChild(h1);
+    
+    const h2 = document.createElement('h2');
+    h2.textContent = 'QUIZTO-BASH'; // Corrected to ALL CAPS
+    introOverlay.appendChild(h2);
+    
+    h1.style.animation = "fadeInUp 1.5s forwards";
+    
+    setTimeout(() => {
+      h2.style.animation = "fadeInUp 1.5s forwards";
+    }, 500);
+}, 2600); // Titles appear 1s after explosion starts
+
+
+// 4. Remove overlay after animation
+setTimeout(() => {
+  introOverlay.style.animation = "fadeOutOverlay 1s forwards";
+}, 5000); // Total animation time ~ 5s
+</script>
+
 </body>
 </html>

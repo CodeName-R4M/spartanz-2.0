@@ -10,7 +10,22 @@
     <link rel="preload" as="image" href="assets/spartanz2k25logo.png" />
     <link rel="preload" as="image" href="assets/np-logo.png" />
 
+    <!-- Font Awesome for social icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
+      /* Add this to your CSS */
+      #particles-js {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        pointer-events: none;
+      }
       /* Reset & Base */
       * {
         margin: 0;
@@ -69,7 +84,7 @@
 
       /* Desktop Navigation Links */
       .nav-links {
-        display: none;
+        display: flex;
         gap: 1.5rem;
       }
 
@@ -83,117 +98,6 @@
 
       .nav-links a:hover {
         color: white;
-      }
-
-      /* Hamburger Button */
-      .hamburger {
-        display: none;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 30px;
-        height: 21px;
-        cursor: pointer;
-        z-index: 101;
-      }
-
-      .hamburger span {
-        height: 3px;
-        width: 100%;
-        background-color: #ffcc00;
-        border-radius: 3px;
-        transition: all 0.3s ease;
-      }
-
-      /* Mobile Menu */
-      .mobile-menu {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 70%;
-        max-width: 300px;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.95);
-        backdrop-filter: blur(10px);
-        padding: 4rem 1.5rem 1.5rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        transition: right 0.4s ease;
-        z-index: 99;
-        border-left: 1px solid rgba(255, 204, 0, 0.3);
-      }
-
-      .mobile-menu.active {
-        right: 0;
-        z-index: 102;
-      }
-
-      .mobile-menu a {
-        color: #ffcc00;
-        text-decoration: none;
-        font-size: 1.3rem;
-        padding: 0.5rem 0;
-        border-bottom: 1px solid rgba(255, 204, 0, 0.2);
-        transition: color 0.2s;
-      }
-
-      .mobile-menu a:hover {
-        color: #fff;
-      }
-
-      /* Close button inside mobile menu */
-      .close-btn {
-        position: absolute;
-        top: 1.2rem;
-        right: 1.2rem;
-        background: none;
-        border: none;
-        color: #ffcc00;
-        font-size: 1.8rem;
-        cursor: pointer;
-        z-index: 100;
-      }
-
-      /* Hamburger animation */
-      .hamburger.active span:nth-child(1) {
-        transform: rotate(45deg) translate(6px, 6px);
-      }
-
-      .hamburger.active span:nth-child(2) {
-        opacity: 0;
-      }
-
-      .hamburger.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(6px, -6px);
-      }
-
-      @media (max-width: 768px) {
-        .hamburger {
-          display: flex;
-        }
-      }
-
-      @media (min-width: 769px) {
-        .nav-links {
-          display: flex;
-        }
-        .college-name {
-          font-size: 1.5rem;
-        }
-        .college-logo-placeholder {
-          width: 60px;
-          height: 60px;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .college-logo-placeholder {
-          width: 40px;
-          height: 40px;
-        }
-        .college-name {
-          font-size: 1rem;
-        }
       }
 
       /* Main Content */
@@ -324,6 +228,14 @@
         .row-heading {
           font-size: 1.5rem;
         }
+        .college-header {
+          flex-direction: column;
+          padding: 0.5rem;
+        }
+        .nav-links {
+          margin-top: 10px;
+          gap: 1rem;
+        }
       }
 
       @media (min-width: 769px) and (max-width: 1024px) {
@@ -332,15 +244,17 @@
         }
       }
     </style>
-
-    <!-- Font Awesome for social icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
   </head>
 
   <body>
+    <div id="particles-js"></div>
+    <script src="particles.min.js"></script>
+    <script>
+      particlesJS.load("particles-js", "particlesjs-config.json", function () {
+        console.log("Particles.js configuration loaded successfully!");
+      });
+    </script>
+
     <!-- College Header -->
     <div class="college-header">
       <div class="college-logo-placeholder">
@@ -352,100 +266,249 @@
 
       <!-- Desktop Navigation -->
       <div class="nav-links">
-        <a href="/teams.html" class="selected">Teams</a>
+        <a href="/">Home</a>
+        <a href="/Teams.html" style="color: white">Teams</a>
         <a href="/about.html">About Us</a>
-        <a href="/contact.html">Contact Us</a>
+        <a href="/contact-us.html">Contact Us</a>
       </div>
-
-      <!-- Hamburger for mobile -->
-      <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-      <button class="close-btn" id="closeMenu">&times;</button>
-      <a href="/teams.html" class="selected">Teams</a>
-      <a href="/about.html">About Us</a>
-      <a href="/contact.html">Contact Us</a>
     </div>
 
     <!-- Main Content -->
     <div class="main-content">
       <h1 class="page-title">Our Team</h1>
 
-      <!-- Staff Co-ordinators -->
+      <!-- Staff Coordinators -->
       <div class="team-row">
-        <h2 class="row-heading">Staff Co-ordinators</h2>
+        <h2 class="row-heading">Staff Coordinators</h2>
         <div class="team-members">
           <div class="team-container">
             <div class="team-circle">
-              <img src="/assets/images/teams/anathala.jpg" alt="Mrs.G.Ananthalakshmi" />
+              <img src="assets/teams/gnanaoli.jpg" alt="Gnanaoli" />
             </div>
             <div class="team-box">
-              <p class="team-name">Mrs. G. Ananthalakshmi</p>
-              <p class="team-specialization">M.E</p>
+              <p class="team-name">Gnanaoli</p>
+              <p class="team-specialization">Staff Coordinator</p>
               <div class="social-links">
-                <a href="https://wa.me/+917708345900" target="_blank"><i class="fa fa-whatsapp"></i></a>
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
               </div>
             </div>
           </div>
           <div class="team-container">
             <div class="team-circle">
-              <img src="/assets/images/teams/kiru.jpg" alt="Mrs.R.Kiruthika" />
+              <img src="assets/teams/ananthala.jpg" alt="Ananthalakshmi"
+              style:"bottom:0"/>
             </div>
             <div class="team-box">
-              <p class="team-name">Mrs. R. Kiruthika</p>
-              <p class="team-specialization">M.E (CSE)</p>
+              <p class="team-name">Ananthalakshmi</p>
+              <p class="team-specialization">Staff Coordinator</p>
               <div class="social-links">
-                <a href="https://wa.me/+919442747768" target="_blank"><i class="fa fa-whatsapp"></i></a>
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
               </div>
             </div>
           </div>
           <div class="team-container">
             <div class="team-circle">
-              <img src="/assets/images/teams/gnanaoli.jpg" alt="Mrs.Gnanaoli.P" />
+              <img src="assets/teams/kiru.jpg" alt="Kiruthika Devi R" />
             </div>
             <div class="team-box">
-              <p class="team-name">Mrs. Gnanaoli P</p>
-              <p class="team-specialization">M.E (CSE)</p>
+              <p class="team-name">Kiruthika Devi R</p>
+              <p class="team-specialization">Staff Coordinator</p>
               <div class="social-links">
-                <a href="https://wa.me/+918148626623" target="_blank"><i class="fa fa-whatsapp"></i></a>
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="team-container">
+            <div class="team-circle">
+              <img src="assets/teams/sujitha.jpg" alt="Sujitha" />
+            </div>
+            <div class="team-box">
+              <p class="team-name">Sujitha</p>
+              <p class="team-specialization">Staff Coordinator</p>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Event Heads -->
+      <!-- Banner Committee -->
       <div class="team-row">
-        <h2 class="row-heading">Event Heads</h2>
+        <h2 class="row-heading">Banner Committee</h2>
         <div class="team-members">
           <div class="team-container">
             <div class="team-circle">
-              <img src="/assets/images/teams/amar.jpg" alt="S.Amarnath" />
+              <img src="assets/teams/anish.jpg" alt="Anish" />
             </div>
             <div class="team-box">
-              <p class="team-name">S. Amarnath</p>
-              <p class="team-specialization">Technical Captain</p>
+              <p class="team-name">Anish</p>
+              <p class="team-specialization">Committee Head</p>
               <div class="social-links">
-                <a href="https://wa.me/+918122763199" target="_blank"><i class="fa fa-whatsapp"></i></a>
-                <a href="https://www.linkedin.com/in/amarnath-s-/" target="_blank"><i class="fa fa-linkedin"></i></a>
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Design Team -->
+      <div class="team-row">
+        <h2 class="row-heading">Design Team</h2>
+        <div class="team-members">
+          <div class="team-container">
+            <div class="team-circle">
+              <img src="assets/teams/santhosh.jpg" alt="Santhosh Kumar" />
+            </div>
+            <div class="team-box">
+              <p class="team-name">Santhosh Kumar</p>
+              <p class="team-specialization">Design Team</p>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
               </div>
             </div>
           </div>
           <div class="team-container">
             <div class="team-circle">
-              <img src="/assets/images/teams/tabi.jpg" alt="K.Tabitha" />
+              <img src="assets/teams/puru.jpg" alt="Purshothaman" />
             </div>
             <div class="team-box">
-              <p class="team-name">K. Tabitha</p>
-              <p class="team-specialization">Non-Technical Captain</p>
+              <p class="team-name">Purushothaman</p>
+              <p class="team-specialization">Design Team</p>
               <div class="social-links">
-                <a href="https://wa.me/+919043381978" target="_blank"><i class="fa fa-whatsapp"></i></a>
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="team-container">
+            <div class="team-circle">
+              <img src="assets/teams/jaisree.jpg" alt="Jaisree M" />
+            </div>
+            <div class="team-box">
+              <p class="team-name">Jaisree M</p>
+              <p class="team-specialization">Design Team</p>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="team-container">
+            <div class="team-circle">
+              <img src="assets/teams/janani.jpg" alt="Janani M" />
+            </div>
+            <div class="team-box">
+              <p class="team-name">Janani M</p>
+              <p class="team-specialization">Design Team</p>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Magazine Team -->
+      <div class="team-row">
+        <h2 class="row-heading">Magazine Team</h2>
+        <div class="team-members">
+          <div class="team-container">
+            <div class="team-circle">
+              <img src="assets/teams/sridhar.jpg" alt="Sridhar" />
+            </div>
+            <div class="team-box">
+              <p class="team-name">Sridhar</p>
+              <p class="team-specialization">Magazine Team</p>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="team-container">
+            <div class="team-circle">
+              <img src="assets/teams/pradeep1.jpg" alt="Pradeep" />
+            </div>
+            <div class="team-box">
+              <p class="team-name">Pradeep</p>
+              <p class="team-specialization">Co-Head</p>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="team-container">
+            <div class="team-circle">
+              <img src="assets/teams/sahayam.jpg" alt="Sahayam Bebin" />
+            </div>
+            <div class="team-box">
+              <p class="team-name">Sahayam Bebin</p>
+              <p class="team-specialization">Magazine Team</p>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="team-container">
+            <div class="team-circle">
+              <img src="assets/teams/shenbaga.jpg" alt="Shenbaga Raj" />
+            </div>
+            <div class="team-box">
+              <p class="team-name">Shenbaga Raj</p>
+              <p class="team-specialization">Magazine Team</p>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
               </div>
             </div>
           </div>
@@ -454,176 +517,169 @@
 
       <!-- Website Team -->
       <div class="team-row">
-        <h2 class="row-heading">Website</h2>
+        <h2 class="row-heading">Website Team</h2>
         <div class="team-members">
           <div class="team-container">
             <div class="team-circle">
-              <img src="/assets/images/teams/sriram.png" alt="N.Sriram" />
+              <img src="assets/teams/sriram.png" alt="Sriram" />
             </div>
             <div class="team-box">
-              <p class="team-name">N. Sriram</p>
-              <p class="team-specialization">Developer</p>
+              <p class="team-name">Sriram</p>
+              <p class="team-specialization">Website Team</p>
               <div class="social-links">
-                <a href="https://wa.me/+918015916569" target="_blank"><i class="fa fa-whatsapp"></i></a>
-                <a href="https://www.linkedin.com/in/sriram-offsec/" target="_blank"><i class="fa fa-linkedin"></i></a>
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
               </div>
             </div>
           </div>
           <div class="team-container">
             <div class="team-circle">
-              <img src="/assets/images/teams/suji.jpg" alt="J.Sujatha" />
+              <img src="assets/teams/tabi.jpg" alt="Tabitha" />
             </div>
             <div class="team-box">
-              <p class="team-name">J. Sujatha</p>
-              <p class="team-specialization">UI/UX Designer</p>
+              <p class="team-name">Tabitha</p>
+              <p class="team-specialization">Website Team</p>
               <div class="social-links">
-                <a href="https://wa.me/+919500015518" target="_blank"><i class="fa fa-whatsapp"></i></a>
-                <a href="https://instagram.com/alicej" target="_blank"><i class="fa fa-instagram"></i></a>
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="team-container">
+            <div class="team-circle">
+              <img src="assets/teams/suji.jpg" alt="Sujatha" />
+            </div>
+            <div class="team-box">
+              <p class="team-name">Sujatha</p>
+              <p class="team-specialization">Website Team</p>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Designers -->
+      <!-- Media Team -->
       <div class="team-row">
-        <h2 class="row-heading">Designers</h2>
+        <h2 class="row-heading">Media Team</h2>
         <div class="team-members">
           <div class="team-container">
             <div class="team-circle">
-              <img src="/assets/images/teams/santhosh.jpg" alt="T.SanthoshKumar" />
+              <img src="assets/teams/naveen.jpg" alt="Naveen" />
             </div>
             <div class="team-box">
-              <p class="team-name">T. Santhosh Kumar</p>
-              <p class="team-specialization">Designer Head</p>
+              <p class="team-name">Naveen</p>
+              <p class="team-specialization">Media Team</p>
               <div class="social-links">
-                <a href="https://wa.me/+916381833302" target="_blank"><i class="fa fa-whatsapp"></i></a>
-                <a href="https://instagram.com/bobbrown" target="_blank"><i class="fa fa-instagram"></i></a>
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
               </div>
             </div>
           </div>
           <div class="team-container">
             <div class="team-circle">
-              <img src="/assets/images/teams/puru.jpg" alt="K.Purushothaman" />
-            </div>
-            <div class="team-box">
-              <p class="team-name">K. Purushothaman</p>
-              <p class="team-specialization">Editor</p>
-              <div class="social-links">
-                <a href="https://linkedin.com/in/purushothaman-k-cyber/" target="_blank"><i class="fa fa-linkedin"></i></a>
-                <a href="https://www.instagram.com/purushotthh/" target="_blank"><i class="fa fa-instagram"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="team-container">
-            <div class="team-circle">
-              <img src="/assets/images/teams/anish.jpg" alt="Anish Prakash" />
-            </div>
-            <div class="team-box">
-              <p class="team-name">Anish Prakash</p>
-              <p class="team-specialization">Designer</p>
-              <div class="social-links">
-                <a href="https://wa.me/+918939372528" target="_blank"><i class="fa fa-whatsapp"></i></a>
-                <a href="https://www.instagram.com/mr_lovelydon_143/" target="_blank"><i class="fa fa-instagram"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="team-container">
-            <div class="team-circle">
-              <img src="/assets/images/teams/shalom.jpg" alt="Shaloam Aaron" />
-            </div>
-            <div class="team-box">
-              <p class="team-name">Shaloam Aaron</p>
-              <p class="team-specialization">Designer</p>
-              <div class="social-links">
-                <a href="https://wa.me/+918939122908" target="_blank"><i class="fa fa-whatsapp"></i></a>
-                <a href="https://www.instagram.com/itz_shaloam/" target="_blank"><i class="fa fa-instagram"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Magazine Committee -->
-      <div class="team-row">
-        <h2 class="row-heading">Magazine Committee</h2>
-        <div class="team-members">
-          <div class="team-container">
-            <div class="team-circle">
-              <img src="/assets/images/teams/pradeep1.jpg" alt="Pradeep" />
-            </div>
-            <div class="team-box">
-              <p class="team-name">Pradeep</p>
-              <p class="team-specialization">Magazine Editor</p>
-              <div class="social-links">
-                <a href="https://wa.me/8667040150" target="_blank"><i class="fa fa-whatsapp"></i></a>
-                <a href="https://www.instagram.com/pradeep_005__/" target="_blank"><i class="fa fa-instagram"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Hospitality Committee -->
-      <div class="team-row">
-        <h2 class="row-heading">Hospitality Committee</h2>
-        <div class="team-members">
-          <div class="team-container">
-            <div class="team-circle">
-              <img src="/assets/images/teams/kish.jpg" alt="Kishore Kumar" />
-            </div>
-            <div class="team-box">
-              <p class="team-name">Kishore Kumar</p>
-              <p class="team-specialization">Hospitality Captain</p>
-              <div class="social-links">
-                <a href="https://wa.me/+917358399294" target="_blank"><i class="fa fa-whatsapp"></i></a>
-                <a href="https://www.instagram.com/kishore_kumar_2_5/" target="_blank"><i class="fa fa-instagram"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Media Committee -->
-      <div class="team-row">
-        <h2 class="row-heading">Media Committee</h2>
-        <div class="team-members">
-          <div class="team-container">
-            <div class="team-circle">
-              <img src="/assets/images/teams/Naveen.jpg" alt="S.Naveen Kumar" />
-            </div>
-            <div class="team-box">
-              <p class="team-name">S. Naveen Kumar</p>
-              <p class="team-specialization">Videographer</p>
-              <div class="social-links">
-                <a href="https://wa.me/+917603931466" target="_blank"><i class="fa fa-whatsapp"></i></a>
-                <a href="https://www.instagram.com/naveeeyyy_/" target="_blank"><i class="fa fa-instagram"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="team-container">
-            <div class="team-circle">
-              <img src="/assets/images/teams/Remo.jpg" alt="Remo" />
-            </div>
-            <div class="team-box">
-              <p class="team-name">Remo</p>
-              <p class="team-specialization">Photographer</p>
-              <div class="social-links">
-                <a href="https://wa.me/+916380330787" target="_blank"><i class="fa fa-whatsapp"></i></a>
-                <a href="https://www.instagram.com/zoro.4674/" target="_blank"><i class="fa fa-instagram"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="team-container">
-            <div class="team-circle">
-              <img src="/assets/images/teams/dhina.jpg" alt="Dhinakaran" />
+              <img src="assets/teams/dhina.jpg" alt="Dhinakaran" />
             </div>
             <div class="team-box">
               <p class="team-name">Dhinakaran</p>
-              <p class="team-specialization">Video Editing</p>
+              <p class="team-specialization">Media Team</p>
               <div class="social-links">
-                <a href="https://wa.me/+918122792964" target="_blank"><i class="fa fa-whatsapp"></i></a>
-                <a href="https://www.instagram.com/dhinaqzz._/" target="_blank"><i class="fa fa-instagram"></i></a>
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Decoration Head -->
+      <div class="team-row">
+        <h2 class="row-heading">Decoration Head</h2>
+        <div class="team-members">
+          <div class="team-container">
+            <div class="team-circle">
+              <img src="assets/teams/sivanraj.jpg" alt="Shivan Raj" />
+            </div>
+            <div class="team-box">
+              <p class="team-name">Shivan Raj</p>
+              <p class="team-specialization">Decoration Head</p>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Purchase Head -->
+      <div class="team-row">
+        <h2 class="row-heading">Purchase Head</h2>
+        <div class="team-members">
+          <div class="team-container">
+            <div class="team-circle">
+              <img src="assets/teams/bala.jpg" alt="Bala" />
+            </div>
+            <div class="team-box">
+              <p class="team-name">Bala</p>
+              <p class="team-specialization">Purchase Head</p>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hospitality -->
+      <div class="team-row">
+        <h2 class="row-heading">Hospitality</h2>
+        <div class="team-members">
+          <div class="team-container">
+            <div class="team-circle">
+              <img src="assets/teams/kish.jpg" alt="Kishore Kumar" />
+            </div>
+            <div class="team-box">
+              <p class="team-name">Kishore Kumar</p>
+              <p class="team-specialization">Hospitality</p>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank"
+                  ><i class="fab fa-whatsapp"></i
+                ></a>
+                <a href="https://instagram.com/" target="_blank"
+                  ><i class="fab fa-instagram"></i
+                ></a>
               </div>
             </div>
           </div>
@@ -632,32 +688,9 @@
     </div>
 
     <script>
-      // Mobile Menu Toggle
-      document.addEventListener("DOMContentLoaded", () => {
-        const hamburger = document.getElementById("hamburger");
-        const mobileMenu = document.getElementById("mobileMenu");
-        const closeMenu = document.getElementById("closeMenu");
-
-        hamburger.addEventListener("click", () => {
-          mobileMenu.classList.add("active");
-          hamburger.classList.add("active");
-        });
-
-        closeMenu.addEventListener("click", () => {
-          mobileMenu.classList.remove("active");
-          hamburger.classList.remove("active");
-        });
-
-        document.addEventListener("click", (e) => {
-          if (
-            !mobileMenu.contains(e.target) &&
-            !hamburger.contains(e.target) &&
-            mobileMenu.classList.contains("active")
-          ) {
-            mobileMenu.classList.remove("active");
-            hamburger.classList.remove("active");
-          }
-        });
+      // Simple script for any future interactivity
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("Teams page loaded successfully");
       });
     </script>
   </body>

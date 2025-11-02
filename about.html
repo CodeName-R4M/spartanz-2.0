@@ -5,7 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About Us - Spartanz 2.O</title>
     <link rel="icon" type="image/x-icon" href="assets/spartanz2k25logo.png" />
+    <!-- Add Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
+      /* Add this to your CSS */
+      #particles-js {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        pointer-events: none;
+      }
       * {
         margin: 0;
         padding: 0;
@@ -144,11 +159,13 @@
         font-size: 1.2rem;
         margin: 0 6px;
         text-decoration: none;
+        transition: all 0.3s ease;
       }
 
       .social-links a:hover {
         color: white;
         text-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
+        transform: translateY(-2px);
       }
 
       /* === Vision & Mission Box === */
@@ -185,6 +202,10 @@
         padding-left: 20px;
       }
 
+      .vision-mission-list li {
+        margin-bottom: 10px;
+      }
+
       /* === Footer === */
       .footer {
         background: rgba(0, 0, 0, 0.9);
@@ -202,6 +223,24 @@
       .footer-text a {
         color: #ffcc00;
         text-decoration: underline;
+        transition: color 0.3s;
+      }
+
+      .footer-text a:hover {
+        color: white;
+      }
+
+      /* === Role Group Styling === */
+      .role-group {
+        margin-bottom: 3rem;
+      }
+
+      .role-title {
+        text-align: center;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        color: #00ffcc;
+        text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
       }
 
       /* === Responsive === */
@@ -215,10 +254,36 @@
         .team-name {
           font-size: 1.1rem;
         }
+        .college-header {
+          flex-direction: column;
+          padding: 0.5rem;
+        }
+        .nav-links {
+          margin-top: 10px;
+          gap: 1rem;
+        }
+
+        /* Mobile: one team member per row */
+        .team-grid {
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+        }
+
+        .role-title {
+          font-size: 1.5rem;
+        }
       }
     </style>
   </head>
   <body>
+    <div id="particles-js"></div>
+    <script src="particles.min.js"></script>
+    <script>
+      particlesJS.load("particles-js", "particlesjs-config.json", function () {
+        console.log("Particles.js configuration loaded successfully!");
+      });
+    </script>
     <!-- College Header -->
     <div class="college-header">
       <div class="college-logo-placeholder">
@@ -229,9 +294,8 @@
       </div>
       <div class="nav-links">
         <a href="/">Home</a>
-        <a href="/Events.html">Events</a>
         <a href="/Teams.html">Teams</a>
-        <a href="/about-us.html" style="color: white">About Us</a>
+        <a href="/about.html" style="color: white">About Us</a>
         <a href="/contact-us.html">Contact Us</a>
       </div>
     </div>
@@ -264,12 +328,39 @@
         <div class="team-grid">
           <div class="team-member">
             <div class="team-circle">
-              <img src="assets/images/teams/balamurugan.jpg" />
+              <img
+                src="assets/images/teams/balamurugan.jpg"
+                alt="Dr. Balamurugan"
+              />
             </div>
-            <div class="team-name">Dr.Balamurugan</div>
+            <div class="team-name">Dr. Balamurugan</div>
             <div class="team-role">M.Tech, Ph.D</div>
             <div class="social-links">
-              <a href="https://wa.me/" target="_blank">📱</a>
+              <a href="https://wa.me/" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Symposium Coordinator -->
+      <h2 class="section-title">Symposium Coordinator</h2>
+      <div class="team-section">
+        <div class="team-grid">
+          <div class="team-member">
+            <div class="team-circle">
+              <img src="assets/images/teams/kiruthika.jpg" alt="Kiruthika R" />
+            </div>
+            <div class="team-name">Kiruthika R</div>
+            <div class="team-role">Overall Head</div>
+            <div class="social-links">
+              <a href="https://wa.me/" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+              <a href="https://www.instagram.com/" target="_blank">
+                <i class="fab fa-instagram"></i>
+              </a>
             </div>
           </div>
         </div>
@@ -278,54 +369,160 @@
       <!-- Association Committee -->
       <h2 class="section-title">Association Committee</h2>
       <div class="team-section">
-        <div class="team-grid">
-          <div class="team-member">
-            <div class="team-circle">
-              <img src="assets/images/teams/kumaresan.jpg" alt="J. Kumaresan" />
+        <!-- President & Vice President -->
+        <div class="role-group">
+          <div class="role-title">President & Vice President</div>
+          <div class="team-grid">
+            <div class="team-member">
+              <div class="team-circle">
+                <img src="assets/images/teams/joshva.jpg" alt="Joshva" />
+              </div>
+              <div class="team-name">Joshva</div>
+              <div class="team-role">President</div>
+              <div class="social-links">
+                <a href="https://wa.me/+919344395887" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+                <a
+                  href="https://www.instagram.com/its_me_joshva_2707/"
+                  target="_blank"
+                >
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </div>
             </div>
-            <div class="team-name">Joshva. V</div>
-            <div class="team-role">President</div>
-            <div class="social-links">
-              <a href="https://wa.me//+919344395887" target="_blank"
-                ><i class="fa fa-whatsapp"></i
-              ></a>
-              <a
-                href="https://www.instagram.com/its_me_joshva_2707/"
-                target="_blank"
-                ><i class="fa fa-instagram"></i
-              ></a>
+
+            <div class="team-member">
+              <div class="team-circle">
+                <img src="assets/images/teams/suriya.jpg" alt="Suriya" />
+              </div>
+              <div class="team-name">Suriya</div>
+              <div class="team-role">Vice President</div>
+              <div class="social-links">
+                <a href="https://wa.me/+919025251348" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank">
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </div>
             </div>
           </div>
+        </div>
 
-          <div class="team-member">
-            <div class="team-circle">
-              <img src="assets/images/teams/joshva.jpg" alt="V. Joshva" />
+        <!-- Secretary & Treasurer -->
+        <div class="role-group">
+          <div class="role-title">Secretary & Treasurer</div>
+          <div class="team-grid">
+            <div class="team-member">
+              <div class="team-circle">
+                <img
+                  src="assets/images/teams/jenifer.jpg"
+                  alt="Jenifer Annise"
+                />
+              </div>
+              <div class="team-name">Jenifer Annise</div>
+              <div class="team-role">Secretary</div>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank">
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </div>
             </div>
-            <div class="team-name">Surya. J</div>
-            <div class="team-role">Vice President</div>
-            <div class="social-links">
-              <a href="https://wa.me/+919025251348" target="_blank">📱</a>
-              <a
-                href="https://www.instagram.com/its_me_joshva_2707/"
-                target="_blank"
-                >📷</a
-              >
+
+            <div class="team-member">
+              <div class="team-circle">
+                <img src="assets/images/teams/david.jpg" alt="David Raj" />
+              </div>
+              <div class="team-name">David Raj</div>
+              <div class="team-role">Treasurer</div>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank">
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </div>
             </div>
           </div>
+        </div>
 
-          <div class="team-member">
-            <div class="team-circle">
-              <img src="assets/images/teams/bala.jpg" alt="G. Bala" />
+        <!-- Joint Secretary -->
+        <div class="role-group">
+          <div class="role-title">Joint Secretary</div>
+          <div class="team-grid">
+            <div class="team-member">
+              <div class="team-circle">
+                <img src="assets/images/teams/sofiya.jpg" alt="Sofiya" />
+              </div>
+              <div class="team-name">Sofiya</div>
+              <div class="team-role">Joint Secretary</div>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank">
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </div>
             </div>
-            <div class="team-name">G. Bala</div>
-            <div class="team-role">Treasurer</div>
-            <div class="social-links">
-              <a href="https://wa.me/919962348907" target="_blank">📱</a>
-              <a
-                href="https://www.instagram.com/unluckyfellow41/"
-                target="_blank"
-                >📷</a
-              >
+
+            <div class="team-member">
+              <div class="team-circle">
+                <img src="assets/images/teams/dhanasri.jpg" alt="Dhanasri" />
+              </div>
+              <div class="team-name">Dhanasri</div>
+              <div class="team-role">Joint Secretary</div>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank">
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Joint Treasurer -->
+        <div class="role-group">
+          <div class="role-title">Joint Treasurer</div>
+          <div class="team-grid">
+            <div class="team-member">
+              <div class="team-circle">
+                <img src="assets/images/teams/aniruth.jpg" alt="Aniruth" />
+              </div>
+              <div class="team-name">Aniruth</div>
+              <div class="team-role">Joint Treasurer</div>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank">
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="team-member">
+              <div class="team-circle">
+                <img src="assets/images/teams/vishal.jpg" alt="Vishal" />
+              </div>
+              <div class="team-name">Vishal</div>
+              <div class="team-role">Joint Treasurer</div>
+              <div class="social-links">
+                <a href="https://wa.me/" target="_blank">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank">
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </div>
             </div>
           </div>
         </div>

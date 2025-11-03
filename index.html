@@ -441,6 +441,20 @@
         cursor: pointer;
         max-width: 100%;
         box-sizing: border-box;
+        /* Subtle breathing animation */
+        animation: card-breathe 4s ease-in-out infinite;
+      }
+
+      @keyframes card-breathe {
+        0%,
+        100% {
+          box-shadow: 0 0 5px rgba(255, 204, 0, 0.2);
+          border-color: rgba(255, 204, 0, 0.3);
+        }
+        50% {
+          box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+          border-color: rgba(255, 204, 0, 0.5);
+        }
       }
 
       /* Hide old spark animations */
@@ -484,6 +498,160 @@
       .event-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 10px 30px rgba(255, 204, 0, 0.3);
+        animation: none; /* Stop breathing on hover */
+      }
+
+      /* NEW: Enhanced Interactive Prompts - Desktop */
+      .interactive-prompt {
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 0.85rem;
+        color: rgba(255, 204, 0, 0.9);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        z-index: 5;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .prompt-icon {
+        font-size: 1.2rem;
+        animation: bounce 2s infinite;
+      }
+
+      .prompt-text {
+        font-weight: bold;
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+      }
+
+      /* Desktop: Show prompt on hover */
+      @media (min-width: 769px) {
+        .event-card:hover .interactive-prompt {
+          opacity: 1;
+        }
+      }
+
+      /* NEW: Mobile-specific prompts - Clean design */
+      @media (max-width: 768px) {
+        .interactive-prompt {
+          display: none; /* Hide desktop prompts on mobile */
+        }
+
+        .mobile-prompt-container {
+          position: absolute;
+          top: -25px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 20;
+          width: 100%;
+          text-align: center;
+        }
+
+        .mobile-prompt {
+          background: rgba(0, 0, 0, 0.85);
+          color: #ffcc00;
+          padding: 8px 16px;
+          border-radius: 20px;
+          font-size: 0.8rem;
+          font-weight: bold;
+          border: 1px solid rgba(255, 204, 0, 0.4);
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          backdrop-filter: blur(10px);
+          animation: mobile-prompt-pulse 3s infinite;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .mobile-prompt-icon {
+          font-size: 1rem;
+        }
+
+        @keyframes mobile-prompt-pulse {
+          0%,
+          100% {
+            transform: scale(1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+          }
+          50% {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(255, 204, 0, 0.2);
+          }
+        }
+
+        /* First card in each section gets the prompt */
+        .events-grid .event-card:first-child .mobile-prompt-container {
+          display: block;
+        }
+
+        .event-card {
+          animation: card-breathe 4s ease-in-out infinite,
+            mobile-card-glow 6s infinite;
+          margin-top: 25px; /* Space for the prompt */
+        }
+
+        @keyframes mobile-card-glow {
+          0%,
+          70%,
+          100% {
+            box-shadow: 0 0 5px rgba(255, 204, 0, 0.2);
+          }
+          85% {
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+          }
+        }
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-5px);
+        }
+        60% {
+          transform: translateY(-3px);
+        }
+      }
+
+      /* NEW: Section intro prompts */
+      .section-intro {
+        position: relative;
+        margin-bottom: 2rem;
+      }
+
+      .section-guide {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        color: #ffcc00;
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        border: 1px solid rgba(255, 204, 0, 0.3);
+        animation: fade-in-out 4s infinite;
+        display: none; /* Hidden by default, shown by JS */
+      }
+
+      @keyframes fade-in-out {
+        0%,
+        100% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
+        }
       }
 
       /* Responsive Design */
@@ -553,6 +721,11 @@
         .event-card {
           width: 260px;
           height: 360px;
+        }
+
+        .mobile-prompt {
+          font-size: 0.75rem;
+          padding: 6px 12px;
         }
       }
 
@@ -864,12 +1037,23 @@
       <section class="section-2">
         <div class="parallax-bg" id="parallax2"></div>
         <div class="section-content">
-          <h2 class="events-title">Technical Events</h2>
+          <div class="section-intro">
+            <h2 class="events-title">Technical Events</h2>
+            <div class="section-guide" id="techGuide">
+              Click to explore events
+            </div>
+          </div>
           <div class="events-grid">
             <div
               class="event-card"
               onclick="window.location.href='/innov-spot.html'"
             >
+              <div class="mobile-prompt-container">
+                <div class="mobile-prompt">
+                  <span class="mobile-prompt-icon">👆</span>
+                  <span>Tap any event to explore</span>
+                </div>
+              </div>
               <video
                 src="assets/innovation-spot.mp4"
                 background="transparent"
@@ -888,6 +1072,10 @@
               <div class="event-content">
                 <h3 class="event-title">Innovation Spotlight</h3>
                 <p class="event-coordinator">Coordinator: Kanishka</p>
+                <div class="interactive-prompt">
+                  <div class="prompt-icon">👆</div>
+                  <div class="prompt-text">Explore Event</div>
+                </div>
               </div>
             </div>
             <div
@@ -909,6 +1097,10 @@
               <div class="event-content">
                 <h3 class="event-title">Spy Heist</h3>
                 <p class="event-coordinator">Coordinator: Mahalakshmi</p>
+                <div class="interactive-prompt">
+                  <div class="prompt-icon">👆</div>
+                  <div class="prompt-text">Explore Event</div>
+                </div>
               </div>
             </div>
             <div
@@ -934,6 +1126,10 @@
               <div class="event-content">
                 <h3 class="event-title">Flag Rush 2.O</h3>
                 <p class="event-coordinator">Coordinator: Sriram.N</p>
+                <div class="interactive-prompt">
+                  <div class="prompt-icon">👆</div>
+                  <div class="prompt-text">Explore Event</div>
+                </div>
               </div>
             </div>
             <div
@@ -958,6 +1154,10 @@
               <div class="event-content">
                 <h3 class="event-title">Quizto-bash</h3>
                 <p class="event-coordinator">Coordinator: Sanjeev</p>
+                <div class="interactive-prompt">
+                  <div class="prompt-icon">👆</div>
+                  <div class="prompt-text">Explore Event</div>
+                </div>
               </div>
             </div>
           </div>
@@ -968,12 +1168,23 @@
       <section class="section-3">
         <div class="parallax-bg" id="parallax3"></div>
         <div class="section-content">
-          <h2 class="events-title">Non-Technical Events</h2>
+          <div class="section-intro">
+            <h2 class="events-title">Non-Technical Events</h2>
+            <div class="section-guide" id="nonTechGuide">
+              Click to explore events
+            </div>
+          </div>
           <div class="events-grid">
             <div
               class="event-card"
               onclick="window.location.href='/treasure-hunt.html'"
             >
+              <div class="mobile-prompt-container">
+                <div class="mobile-prompt">
+                  <span class="mobile-prompt-icon">👆</span>
+                  <span>Tap any event to explore</span>
+                </div>
+              </div>
               <img
                 src="assets/treasure.gif"
                 style="
@@ -991,6 +1202,10 @@
                 <p class="event-coordinator" style="color: black">
                   <b>Coordinator: Hemnath</b>
                 </p>
+                <div class="interactive-prompt" style="color: black">
+                  <div class="prompt-icon">👆</div>
+                  <div class="prompt-text">Explore Event</div>
+                </div>
               </div>
             </div>
             <div
@@ -1011,11 +1226,14 @@
                 "
                 loop
                 autoplay
-              >
-          </video>
+              ></video>
               <div class="event-content">
                 <h3 class="event-title">Locked Adventure</h3>
                 <p class="event-coordinator">Coordinator: Ashwanthi</p>
+                <div class="interactive-prompt">
+                  <div class="prompt-icon">👆</div>
+                  <div class="prompt-text">Explore Event</div>
+                </div>
               </div>
             </div>
             <div
@@ -1037,6 +1255,10 @@
               <div class="event-content">
                 <h3 class="event-title">Bid and Beat</h3>
                 <p class="event-coordinator">Coordinator: Priyanka</p>
+                <div class="interactive-prompt">
+                  <div class="prompt-icon">👆</div>
+                  <div class="prompt-text">Explore Event</div>
+                </div>
               </div>
             </div>
             <div
@@ -1059,13 +1281,478 @@
               <div class="event-content">
                 <h3 class="event-title">Free Fire</h3>
                 <p class="event-coordinator">Coordinator: Sanjay S</p>
+                <div class="interactive-prompt">
+                  <div class="prompt-icon">👆</div>
+                  <div class="prompt-text">Explore Event</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
     </div>
+    <footer
+      style="
+        background: linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.95) 0%,
+          rgba(20, 20, 20, 0.98) 100%
+        );
+        color: #ffcc00;
+        padding: 3rem 1rem 2rem;
+        border-top: 2px solid rgba(255, 204, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+      "
+    >
+      <!-- Background Pattern -->
+      <div
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-image: radial-gradient(
+              circle at 20% 80%,
+              rgba(255, 204, 0, 0.1) 0%,
+              transparent 50%
+            ),
+            radial-gradient(
+              circle at 80% 20%,
+              rgba(255, 204, 0, 0.05) 0%,
+              transparent 50%
+            );
+          z-index: 1;
+        "
+      ></div>
 
+      <div
+        style="
+          max-width: 1200px;
+          margin: 0 auto;
+          position: relative;
+          z-index: 2;
+        "
+      >
+        <!-- Footer Content -->
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+            text-align: center;
+          "
+        >
+          <!-- Contact Header -->
+          <div>
+            <h3
+              style="
+                font-size: 2rem;
+                margin-bottom: 1rem;
+                color: #ffcc00;
+                text-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+                font-weight: bold;
+              "
+            >
+              Get In Touch
+            </h3>
+            <p
+              style="
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 1.1rem;
+                max-width: 600px;
+                margin: 0 auto;
+                line-height: 1.6;
+              "
+            >
+              Have questions about Spartanz 2.O? Reach out to our symposium team
+              through any of these channels.
+            </p>
+          </div>
+
+          <!-- Contact Options -->
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+              gap: 1.5rem;
+              margin: 2rem 0;
+            "
+          >
+            <!-- Call Option -->
+            <a
+              href="tel:+918015916569"
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 1.5rem;
+                background: rgba(0, 0, 0, 0.6);
+                border: 1px solid rgba(255, 204, 0, 0.3);
+                border-radius: 15px;
+                text-decoration: none;
+                color: #ffcc00;
+                transition: all 0.3s ease;
+                backdrop-filter: blur(10px);
+              "
+              onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(255, 204, 0, 0.2)'; this.style.borderColor='rgba(255, 204, 0, 0.6)'"
+              onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='rgba(255, 204, 0, 0.3)'"
+            >
+              <div
+                style="
+                  font-size: 3rem;
+                  margin-bottom: 1rem;
+                  filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.5));
+                "
+              >
+                📞
+              </div>
+              <h4
+                style="font-size: 1.4rem; margin-bottom: 0.5rem; color: #ffcc00"
+              >
+                Call Us
+              </h4>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.8);
+                  margin-bottom: 1rem;
+                  font-size: 1rem;
+                "
+              >
+                Speak directly with our team
+              </p>
+              <div
+                style="
+                  background: rgba(255, 204, 0, 0.1);
+                  padding: 0.5rem 1rem;
+                  border-radius: 25px;
+                  border: 1px solid rgba(255, 204, 0, 0.3);
+                  font-weight: bold;
+                  font-size: 1.1rem;
+                "
+              >
+                +91 98765 43210
+              </div>
+            </a>
+
+            <!-- WhatsApp Option -->
+            <a
+              href="https://wa.me/918015916569?text=Hi%20Spartanz%202.O%20Team,%20I%20have%20a%20question%20about%20the%20symposium"
+              target="_blank"
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 1.5rem;
+                background: rgba(0, 0, 0, 0.6);
+                border: 1px solid rgba(255, 204, 0, 0.3);
+                border-radius: 15px;
+                text-decoration: none;
+                color: #ffcc00;
+                transition: all 0.3s ease;
+                backdrop-filter: blur(10px);
+              "
+              onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(255, 204, 0, 0.2)'; this.style.borderColor='rgba(255, 204, 0, 0.6)'"
+              onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='rgba(255, 204, 0, 0.3)'"
+            >
+              <div
+                style="
+                  font-size: 3rem;
+                  margin-bottom: 1rem;
+                  filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.5));
+                "
+              >
+                💬
+              </div>
+              <h4
+                style="font-size: 1.4rem; margin-bottom: 0.5rem; color: #ffcc00"
+              >
+                WhatsApp
+              </h4>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.8);
+                  margin-bottom: 1rem;
+                  font-size: 1rem;
+                "
+              >
+                Quick chat with our coordinators
+              </p>
+              <div
+                style="
+                  background: rgba(255, 204, 0, 0.1);
+                  padding: 0.5rem 1rem;
+                  border-radius: 25px;
+                  border: 1px solid rgba(255, 204, 0, 0.3);
+                  font-weight: bold;
+                  font-size: 1.1rem;
+                "
+              >
+                Message Now
+              </div>
+            </a>
+
+            <!-- Email Option -->
+            <a
+              href="mailto:cyber.2024npsbcet@gmail.com?subject=Query%20about%20Spartanz%202.O&body=Hello%20Spartanz%20Team,"
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 1.5rem;
+                background: rgba(0, 0, 0, 0.6);
+                border: 1px solid rgba(255, 204, 0, 0.3);
+                border-radius: 15px;
+                text-decoration: none;
+                color: #ffcc00;
+                transition: all 0.3s ease;
+                backdrop-filter: blur(10px);
+              "
+              onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(255, 204, 0, 0.2)'; this.style.borderColor='rgba(255, 204, 0, 0.6)'"
+              onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='rgba(255, 204, 0, 0.3)'"
+            >
+              <div
+                style="
+                  font-size: 3rem;
+                  margin-bottom: 1rem;
+                  filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.5));
+                "
+              >
+                📧
+              </div>
+              <h4
+                style="font-size: 1.4rem; margin-bottom: 0.5rem; color: #ffcc00"
+              >
+                Email Us
+              </h4>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.8);
+                  margin-bottom: 1rem;
+                  font-size: 1rem;
+                "
+              >
+                Send detailed queries and requests
+              </p>
+              <div
+                style="
+                  background: rgba(255, 204, 0, 0.1);
+                  padding: 0.5rem 1rem;
+                  border-radius: 25px;
+                  border: 1px solid rgba(255, 204, 0, 0.3);
+                  font-weight: bold;
+                  font-size: 1.1rem;
+                  word-break: break-word;
+                  max-width: 100%;
+                "
+              >
+                cyber.2024npsbcet@gmail.com
+              </div>
+            </a>
+          </div>
+
+          <!-- Additional Info -->
+          <div
+            style="
+              border-top: 1px solid rgba(255, 204, 0, 0.2);
+              padding-top: 2rem;
+              margin-top: 1rem;
+            "
+          >
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+                text-align: left;
+              "
+            >
+              <!-- College Info -->
+              <div>
+                <h4
+                  style="color: #ffcc00; margin-bottom: 1rem; font-size: 1.2rem"
+                >
+                  New Prince Shri Bhavani College
+                </h4>
+                <p
+                  style="
+                    color: rgba(255, 255, 255, 0.7);
+                    line-height: 1.6;
+                    font-size: 0.95rem;
+                  "
+                >
+                  College of Engineering and Technology<br />
+                  Chennai, Tamil Nadu
+                </p>
+              </div>
+
+              <!-- Quick Links -->
+              <div>
+                <h4
+                  style="color: #ffcc00; margin-bottom: 1rem; font-size: 1.2rem"
+                >
+                  Quick Links
+                </h4>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem">
+                  <a
+                    href="/teams.html"
+                    style="
+                      color: rgba(255, 255, 255, 0.8);
+                      text-decoration: none;
+                      transition: color 0.3s ease;
+                      font-size: 0.95rem;
+                    "
+                    onmouseover="this.style.color='#ffcc00'"
+                    onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'"
+                    >Teams</a
+                  >
+                  <a
+                    href="/about.html"
+                    style="
+                      color: rgba(255, 255, 255, 0.8);
+                      text-decoration: none;
+                      transition: color 0.3s ease;
+                      font-size: 0.95rem;
+                    "
+                    onmouseover="this.style.color='#ffcc00'"
+                    onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'"
+                    >About Us</a
+                  >
+                  <a
+                    href="/contact-us.html"
+                    style="
+                      color: rgba(255, 255, 255, 0.8);
+                      text-decoration: none;
+                      transition: color 0.3s ease;
+                      font-size: 0.95rem;
+                    "
+                    onmouseover="this.style.color='#ffcc00'"
+                    onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'"
+                    >Contact Us</a
+                  >
+                </div>
+              </div>
+              <!-- Social Media -->
+              <div>
+                <h4
+                  style="color: #ffcc00; margin-bottom: 1rem; font-size: 1.2rem"
+                >
+                  Follow Us
+                </h4>
+                <div style="display: flex; gap: 1rem">
+                  <a
+                    href="https://www.instagram.com/newprince_cyber"
+                    target="_blank"
+                    style="
+                      display: inline-flex;
+                      align-items: center;
+                      justify-content: center;
+                      width: 50px;
+                      height: 50px;
+                      background: radial-gradient(
+                        circle at 30% 107%,
+                        #fdf497 0%,
+                        #fdf497 5%,
+                        #fd5949 45%,
+                        #d6249f 60%,
+                        #285aeb 90%
+                      );
+                      border-radius: 12px;
+                      text-decoration: none;
+                      transition: all 0.3s ease;
+                      box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+                      position: relative;
+                      overflow: hidden;
+                    "
+                    onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 25px rgba(255, 204, 0, 0.5)'"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 204, 0, 0.3)'"
+                  >
+                    <!-- Instagram Logo -->
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      style="filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))"
+                    >
+                      <!-- Camera Body -->
+                      <rect
+                        x="2"
+                        y="2"
+                        width="20"
+                        height="20"
+                        rx="6"
+                        stroke="white"
+                        stroke-width="2"
+                        fill="none"
+                      />
+                      <!-- Lens -->
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="4"
+                        stroke="white"
+                        stroke-width="2"
+                        fill="none"
+                      />
+                      <!-- Flash Dot -->
+                      <circle cx="18" cy="6" r="1" fill="white" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Responsive Styles -->
+      <style>
+        @media (max-width: 768px) {
+          footer {
+            padding: 2rem 1rem 1.5rem;
+          }
+
+          footer > div > div > div:nth-child(2) {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+
+          footer a {
+            padding: 1.5rem 1rem !important;
+          }
+
+          footer > div > div > div:nth-child(4) > div {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            text-align: center;
+          }
+
+          footer h3 {
+            font-size: 1.5rem !important;
+          }
+
+          footer h4 {
+            font-size: 1.1rem !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          footer {
+            padding: 1.5rem 0.5rem 1rem;
+          }
+
+          footer a {
+            padding: 1rem 0.5rem !important;
+          }
+
+          footer div[style*="font-size: 3rem"] {
+            font-size: 2.5rem !important;
+          }
+        }
+      </style>
+    </footer>
     <script>
       // Snowflakes - Reduced for performance
       const snowContainer = document.getElementById("snow-container");
@@ -1095,6 +1782,8 @@
         const loadingText = document.getElementById("loadingText");
         const body = document.body;
         const skipButton = document.getElementById("skipButton");
+        const techGuide = document.getElementById("techGuide");
+        const nonTechGuide = document.getElementById("nonTechGuide");
 
         const isMobile = window.innerWidth <= 768;
         const activeVideo = isMobile ? mobileVideo : desktopVideo;
@@ -1240,6 +1929,35 @@
 
         // Initial positioning
         requestTick();
+
+        // Show section guides when scrolling to sections
+        function showSectionGuides() {
+          const techSection = document.querySelector(".section-2");
+          const nonTechSection = document.querySelector(".section-3");
+
+          const techRect = techSection.getBoundingClientRect();
+          const nonTechRect = nonTechSection.getBoundingClientRect();
+
+          // Show tech guide when section is in view
+          if (techRect.top < window.innerHeight * 0.8 && techRect.bottom > 0) {
+            techGuide.style.display = "block";
+          } else {
+            techGuide.style.display = "none";
+          }
+
+          // Show non-tech guide when section is in view
+          if (
+            nonTechRect.top < window.innerHeight * 0.8 &&
+            nonTechRect.bottom > 0
+          ) {
+            nonTechGuide.style.display = "block";
+          } else {
+            nonTechGuide.style.display = "none";
+          }
+        }
+
+        // Add scroll listener for section guides
+        window.addEventListener("scroll", showSectionGuides);
 
         // Hamburger Menu
         const hamburger = document.getElementById("hamburger");
